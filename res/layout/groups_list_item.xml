@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+	android:id="@+id/GroupsListItemLayout" 
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="#FFFFFF"
+	android:padding="8px"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	
+		<TextView
+			android:text=""
+			android:id="@+id/GroupTitle"
+			android:textSize="24sp"
+			android:textColor="#000000"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"/>
+
+		<TextView
+			android:text="@string/lblnphotos"
+			android:id="@+id/GroupNPhotos"
+			android:textSize="12sp"
+			android:textColor="#000000"
+			android:layout_below="@+id/GroupTitle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"/>
+			
+</RelativeLayout>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zmosoft.flickrfree.CommentLayout
+	android:id="@+id/CommentLayout"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	
+	<LinearLayout
+		android:id="@+id/CommentLayout"
+		android:orientation="horizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@android:color/darker_gray"
+		xmlns:android="http://schemas.android.com/apk/res/android">
+		
+		<TextView
+			android:text="@string/lblauthor"
+			android:id="@+id/Author"
+			android:textSize="16sp"
+			android:background="@android:color/darker_gray"
+			android:textColor="@android:color/black"
+			android:textStyle="bold"
+			android:padding="4px"
+			android:gravity="center_horizontal"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+		</TextView>
+
+		<ImageView
+			android:id="@+id/CommentLinkButton"
+			android:background="@android:color/darker_gray"
+			android:src="@drawable/comment_link_button"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+		</ImageView>
+
+	</LinearLayout>
+
+	<WebView
+		android:id="@+id/Comment"
+		android:textSize="18sp"
+		android:padding="4px"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+	</WebView>
+			
+</com.zmosoft.flickrfree.CommentLayout>

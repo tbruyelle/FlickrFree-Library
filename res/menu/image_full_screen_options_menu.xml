@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+	<item
+		android:id="@+id/item_info"
+		android:enabled="true"
+		android:title="@string/mnu_imginfo"
+		android:visible="true">
+	</item>
+
+	<item
+		android:id="@+id/item_comments"
+		android:enabled="true"
+		android:title="@string/mnu_imgcomments"
+		android:visible="true">
+	</item>
+
+	<item
+		android:id="@+id/item_favorite"
+		android:title="@string/mnu_favorite"
+		android:enabled="true"
+		android:visible="true">
+	</item>
+
+	<item
+		android:id="@+id/item_tags"
+		android:enabled="true"
+		android:title="@string/mnu_imgtags"
+		android:visible="true">
+	</item>
+
+	<item
+		android:id="@+id/item_download"
+		android:enabled="true"
+		android:title="@string/mnu_imgdownload"
+		android:visible="true">
+	</item>
+
+	<item
+		android:id="@+id/item_context"
+		android:enabled="true"
+		android:title="@string/mnu_imgcontext"
+		android:visible="true">
+	</item>
+</menu>

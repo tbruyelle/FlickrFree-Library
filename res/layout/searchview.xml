@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	android:id="@+id/SearchLayout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:gravity="center_horizontal"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<TextView
+		android:text="@string/lblsearch"
+		android:id="@+id/TextSearchLabel"
+		android:gravity="center_horizontal"
+		android:background="#000000"
+		android:padding="20px"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"/>
+
+	<EditText
+		android:text=""
+		android:id="@+id/EditSearchText"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"/>
+		
+	<Spinner
+		android:id="@+id/SearchOptionsSpinner"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"/>
+
+	<Spinner
+		android:id="@+id/SearchSubOptionsSpinner"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"/>
+
+	<Button
+		android:text="@string/btnsearch"
+		android:id="@+id/BtnSearch"
+		android:paddingLeft="50px"
+		android:paddingRight="50px"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"/>
+
+</LinearLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+	android:id="@+id/ImageInfoEntryLayout" 
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:background="#000000"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	
+		<TextView
+			android:text="@string/lbltitle"
+			android:id="@+id/InfoTitle"
+			android:textSize="18sp"
+			android:background="#FFFFFF"
+			android:textColor="#000000"
+			android:padding="4px"
+			android:gravity="center_horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"/>
+
+		<TextView
+			android:text="@string/lblvalue"
+			android:id="@+id/InfoValue"
+			android:autoLink="none"
+			android:textSize="18sp"
+			android:background="#000000"
+			android:textColor="#FFFFFF"
+			android:layout_below="@id/InfoTitle"
+			android:padding="4px"
+			android:gravity="center_horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"/>
+			
+		<ImageButton
+			android:id="@+id/btnImageInfo"
+			android:layout_below="@id/InfoValue"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true">
+		</ImageButton>
+
+</RelativeLayout>

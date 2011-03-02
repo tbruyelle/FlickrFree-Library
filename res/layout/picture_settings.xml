@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/PictureSettingsWindowLayout"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:padding="5dp"
+  android:orientation="vertical">
+
+	<ScrollView android:id="@+id/PictureSettingsScroll"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		xmlns:android="http://schemas.android.com/apk/res/android">
+			
+		<LinearLayout
+		  xmlns:android="http://schemas.android.com/apk/res/android"
+		  android:id="@+id/PictureSettingsLayout"
+		  android:layout_width="fill_parent"
+		  android:layout_height="fill_parent"
+		  android:padding="5dp"
+		  android:orientation="vertical">
+		
+			<!-- TODO: Add thumbnail of image to be uploaded. -->
+			<ImageView android:id="@+id/UploadImage"
+					   android:layout_width="wrap_content"
+					   android:layout_height="wrap_content">
+		   	</ImageView>
+			
+			<TextView android:text="@string/lblphototitle"
+					  android:id="@+id/lblPhotoTitle"
+					  android:padding="2dp"
+					  android:layout_width="fill_parent"
+					  android:layout_height="wrap_content">
+		    </TextView>
+		
+			<EditText android:text=""
+					  android:id="@+id/txtPhotoTitle"
+					  android:singleLine="true"
+					  android:layout_width="fill_parent"
+					  android:layout_height="wrap_content">
+		  	</EditText>
+		
+			<TextView android:text="@string/lblcomment"
+					  android:id="@+id/lblPhotoComment"
+					  android:padding="2dp"
+					  android:layout_width="fill_parent"
+					  android:layout_height="wrap_content">
+		    </TextView>
+		
+			<EditText android:text=""
+					  android:id="@+id/txtPhotoComment"
+					  android:lines="1"
+					  android:gravity="top"
+					  android:layout_width="fill_parent"
+					  android:layout_height="wrap_content">
+		  	</EditText>
+		
+			<TextView android:text="@string/lblphototags"
+					  android:id="@+id/lblPhotoTags"
+					  android:padding="2dp"
+					  android:layout_width="fill_parent"
+					  android:layout_height="wrap_content">
+		    </TextView>
+		
+			<EditText android:text=""
+					  android:id="@+id/txtPhotoTags"
+					  android:singleLine="true"
+					  android:layout_width="fill_parent"
+					  android:layout_height="wrap_content">
+		  	</EditText>
+		
+			<TextView android:text="@string/lblvisibleto"
+					  android:id="@+id/lblVisibleTo"
+					  android:layout_width="fill_parent"
+					  android:layout_height="wrap_content"
+					  android:padding="2dp"
+					  android:gravity="center"
+					  android:layout_marginTop="10dp"
+					  android:textColor="@android:color/black"
+					  android:background="@android:color/darker_gray">
+		    </TextView>
+		
+			<LinearLayout
+			  xmlns:android="http://schemas.android.com/apk/res/android"
+			  android:id="@+id/PictureSettingsCheckboxLayout"
+			  android:layout_width="fill_parent"
+			  android:layout_height="wrap_content"
+			  android:gravity="center_horizontal"
+			  android:padding="0dp"
+			  android:orientation="horizontal"
+			  android:background="@android:color/white">
+			
+				<CheckBox android:text="@string/chkeveryone"
+						  android:id="@+id/chkEveryone"
+						  android:layout_weight="1"
+						  android:textColor="@android:color/black"
+						  android:layout_width="wrap_content"
+						  android:layout_height="fill_parent">
+			  	</CheckBox>
+			  	
+				<CheckBox android:text="@string/chkfriends"
+						  android:id="@+id/chkFriends"
+						  android:layout_weight="1"
+						  android:textColor="@android:color/black"
+						  android:layout_width="wrap_content"
+						  android:layout_height="fill_parent">
+			  	</CheckBox>
+			  	
+				<CheckBox android:text="@string/chkfamily"
+						  android:id="@+id/chkFamily"
+						  android:layout_weight="1"
+						  android:textColor="@android:color/black"
+						  android:layout_width="wrap_content"
+						  android:layout_height="fill_parent">
+			  	</CheckBox>
+	
+			</LinearLayout>
+	
+			<LinearLayout
+			  xmlns:android="http://schemas.android.com/apk/res/android"
+			  android:id="@+id/SafetySettingsLayout"
+			  android:layout_width="fill_parent"
+			  android:layout_height="wrap_content"
+			  android:layout_marginTop="10dp"
+			  android:padding="2dp"
+			  android:orientation="horizontal">
+			
+				<TextView android:text="@string/lblsafetylevel"
+						  android:id="@+id/lblSafetyLevel"
+						  android:padding="2dp"
+						  android:layout_weight="0"
+						  android:gravity="center_vertical"
+						  android:layout_width="wrap_content"
+						  android:layout_height="fill_parent">
+			    </TextView>
+			
+				<Spinner android:id="@+id/spnSafetyLevel"
+						 android:layout_weight="1"
+						 android:layout_width="wrap_content"
+						 android:layout_height="fill_parent">
+			 	</Spinner>
+	
+			</LinearLayout>
+			
+			<LinearLayout
+			  xmlns:android="http://schemas.android.com/apk/res/android"
+			  android:id="@+id/PictureSettingsButtonLayout"
+			  android:layout_width="fill_parent"
+			  android:layout_height="wrap_content"
+			  android:layout_marginTop="10dp"
+			  android:gravity="center_horizontal"
+			  android:orientation="horizontal">
+			  
+				<Button android:text="@string/btnupload"
+						android:id="@+id/btnUpload"
+						android:layout_weight="1"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content">
+				</Button>
+				
+				<Button android:text="@string/btncancellabel"
+						android:id="@+id/btnCancel"
+						android:layout_weight="1"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content">
+				</Button>
+				
+			</LinearLayout>
+		
+	</LinearLayout>
+	
+	</ScrollView>
+	
+</LinearLayout>

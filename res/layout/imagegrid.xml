@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	android:id="@+id/RelativeLayout01"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	
+	<RelativeLayout
+		android:id="@+id/ImgGridHeader"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="#ffffff"
+		android:paddingTop="3px"
+		android:gravity="center"
+		xmlns:android="http://schemas.android.com/apk/res/android">
+		
+		<LinearLayout
+			android:id="@+id/ImgGridPager"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			xmlns:android="http://schemas.android.com/apk/res/android">
+	
+			<ImageButton
+				android:layout_width="50px"
+				android:layout_height="50px"
+				android:gravity="left"
+				android:src="@+drawable/left_arrow"
+				android:padding="2px"
+				android:id="@+id/BtnPrevPage"/>
+				
+			<Button
+				android:id="@+id/BtnPageNum"
+				android:layout_height="50px"
+				android:layout_width="wrap_content"
+				android:gravity="center"
+				android:layout_weight="1"
+				android:text=""/> 
+			
+			<ImageButton
+				android:layout_width="50px"
+				android:layout_height="50px"
+				android:gravity="right"
+				android:padding="2px"
+				android:src="@+drawable/right_arrow"
+				android:id="@+id/BtnNextPage"/>
+
+		</LinearLayout>
+		
+		<RelativeLayout
+			android:id="@+id/ImgGridPageSet"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			xmlns:android="http://schemas.android.com/apk/res/android">
+	
+			<EditText
+				android:id="@+id/EditPageNumber"
+				android:layout_width="wrap_content"
+				android:layout_height="50px"
+				android:minEms="4"
+				android:inputType="phone"
+				android:numeric="integer"
+				android:text=""/>
+			
+			<Button
+				android:id="@+id/BtnPageChangeOK"
+				android:layout_width="wrap_content"
+				android:layout_height="50px"
+				android:gravity="center"
+				android:layout_toRightOf="@+id/EditPageNumber"
+				android:minEms="4"
+				android:text="@string/btnok"/> 
+			
+			<Button
+				android:id="@+id/BtnPageChangeCancel"
+				android:layout_width="wrap_content"
+				android:layout_height="50px"
+				android:gravity="center"
+				android:layout_toRightOf="@+id/BtnPageChangeOK"
+				android:minEms="4"
+				android:text="@string/btncancellabel"/> 
+			
+		</RelativeLayout>
+	
+	</RelativeLayout>
+				
+	<GridView
+		xmlns:android="http://schemas.android.com/apk/res/android" 
+	    android:id="@+id/gridview"
+	    android:layout_width="wrap_content" 
+	    android:layout_height="fill_parent"
+	    android:numColumns="auto_fit"
+	    android:verticalSpacing="10dp"
+	    android:horizontalSpacing="10dp"
+	    android:columnWidth="84dp"
+	    android:rowHeight="84dp"
+	    android:gravity="center"
+	    android:layout_below="@+id/ImgGridHeader"/>
+	
+</RelativeLayout>

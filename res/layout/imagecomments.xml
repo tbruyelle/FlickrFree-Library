@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+	
+	<ScrollView android:id="@+id/ImgCommentsScroll"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		xmlns:android="http://schemas.android.com/apk/res/android">
+			
+		<LinearLayout
+			android:id="@+id/ImgCommentsLayout"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:orientation="vertical"
+			android:padding="5dp"
+			xmlns:android="http://schemas.android.com/apk/res/android">
+
+			<LinearLayout
+				android:id="@+id/ImgAddCommentHeaderLayout"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				xmlns:android="http://schemas.android.com/apk/res/android">
+				
+				<LinearLayout
+					android:id="@+id/ImgAddCommentCountLayout"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal">
+
+					<TextView
+						android:id="@+id/ImgCommentCount"
+						android:text="Comments x-y of z"
+						android:layout_weight="1"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"/>
+					
+					<Button
+						android:id="@+id/BtnAddComment"
+						android:text="@string/btnaddcommentlabel"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"/>
+
+				</LinearLayout>
+										
+				<RelativeLayout
+					android:id="@+id/ImgAddCommentLayout"
+					android:layout_width="fill_parent"
+					android:layout_height="fill_parent"
+					android:layout_below="@id/BtnAddComment"
+					xmlns:android="http://schemas.android.com/apk/res/android">
+
+					<TextView
+						android:id="@+id/LblAddComment"
+						android:text="@string/lbladdcomment"
+						android:gravity="center_horizontal"
+						android:layout_centerHorizontal="true"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"/>
+
+					<EditText
+						android:id="@+id/CommentText"
+						android:text=""
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:layout_centerHorizontal="true"
+						android:layout_below="@+id/LblAddComment">
+					</EditText>
+					
+					<LinearLayout
+						android:id="@+id/ImgAddCommentButtonsLayout"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:layout_below="@+id/CommentText"
+						android:gravity="center_horizontal"
+						xmlns:android="http://schemas.android.com/apk/res/android">
+					
+						<Button
+							android:id="@+id/BtnAddCommentSend"
+							android:text="@string/btnsendlabel"
+							android:layout_weight="1"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content">
+						</Button>
+							
+						<Button
+							android:id="@+id/BtnAddCommentCancel"
+							android:text="@string/btncancellabel"
+							android:layout_weight="1"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content">
+						</Button>
+
+					</LinearLayout>
+									
+				</RelativeLayout>
+				
+			</LinearLayout>
+			
+		</LinearLayout>
+
+</ScrollView>

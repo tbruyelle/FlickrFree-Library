@@ -1,0 +1,55 @@
+<resources>
+
+	<string-array name="no_user_view_list">
+	    <item>Search</item>
+	</string-array>
+
+	<string-array name="main_user_view_list">
+		<item>Upgrade</item>
+		<item>Photostream</item>
+	    <item>Sets</item>
+	    <item>Collections</item>
+	    <item>Tags</item>
+	    <item>Favorites</item>
+	    <item>Groups</item>
+		<item>Contacts</item>
+	    <item>Search</item>
+	    <item>Upload</item>
+	</string-array>
+
+	<string-array name="user_view_list">
+		<item>Photostream</item>
+	    <item>Sets</item>
+	    <item>Collections</item>
+	    <item>Tags</item>
+	    <item>Favorites</item>
+	    <item>Groups</item>
+		<item>Contacts</item>
+	</string-array>
+
+	<string-array name="account_view_list">
+		<item>Add Account</item>
+	    <item>Switch Accounts</item>
+	    <item>Log Out</item>
+	</string-array>
+
+	<string-array name="search_options_list">
+		<item>Photos</item>
+	    <item>Groups</item>
+	    <item>Tags</item>
+	    <item>Username</item>
+	</string-array>
+
+	<string-array name="search_photos_suboptions_list">
+		<item>All Photos</item>
+	    <item>Your Photostream</item>
+	    <item>Your Favorites</item>
+	</string-array>
+
+	<string-array name="safety_levels_list">
+		<item>Safe</item>	
+		<item>Moderate</item>	
+		<item>Restricted</item>	
+	</string-array>
+
+</resources>
