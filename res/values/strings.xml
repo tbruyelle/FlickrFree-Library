@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<!-- <string name="apikey">c314b61e3cc4baba1b18119e0ac70907</string>
-	<string name="secret">10f8b147a4f19e57</string>
-	<string name="auth_url">http://www.flickr.com/auth-72157623657714648</string> -->
 	<string name="app_name">Flickr Free</string>
 	<string name="added_favorite">Added photo to your favorites</string>
 	<string name="authenticate">Flickr Account Authentication</string>
