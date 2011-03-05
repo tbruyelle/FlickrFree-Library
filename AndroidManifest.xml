@@ -20,7 +20,7 @@
         </activity>
 
         <activity
-            android:name=".AuthenticateActivity"
+            android:name="com.kamosoft.flickr.AuthenticateActivity"
             android:label="@string/authenticate">
             <intent-filter>
                 <action
