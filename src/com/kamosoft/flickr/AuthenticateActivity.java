@@ -39,8 +39,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.zmosoft.flickrfree.R;
-
 public class AuthenticateActivity
     extends Activity
     implements OnClickListener
