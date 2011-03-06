@@ -1,14 +1,7 @@
 package com.kamosoft.flickr;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintStream;
-import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -473,19 +466,6 @@ public class AuthenticateActivity
         return ( !token.equals( "" ) );
     }
 
-    public static void RemoveUser( SharedPreferences prefs, String username )
-    {
-        // Get the editor for prefs
-        SharedPreferences.Editor prefs_editor = prefs.edit();
-
-        prefs_editor.remove( "FlickrUsername_" + username );
-        prefs_editor.commit();
-        if ( prefs.getString( "username", "" ).equals( username ) )
-        {
-            AuthenticateActivity.LogOut( prefs );
-        }
-    }
-
     public static void LogOut( SharedPreferences prefs )
     {
         // Get the editor for prefs
@@ -498,65 +478,5 @@ public class AuthenticateActivity
         prefs_editor.remove( GlobalResources.PREF_REALNAME );
         prefs_editor.remove( GlobalResources.PREF_DISPLAYNAME );
         prefs_editor.commit();
-    }
-
-    public static void ExportAuth( SharedPreferences auth_prefs, String path )
-    {
-        Map<String, ?> m = auth_prefs.getAll();
-        try
-        {
-            File f = new File( path );
-            if ( !f.exists() )
-            {
-                f.createNewFile();
-            }
-            FileOutputStream of = new FileOutputStream( f );
-            for ( String key : m.keySet() )
-            {
-                if ( key.contains( "FlickrUsername_" ) )
-                {
-                    new PrintStream( of ).println( key + " : " + m.get( key ).toString() );
-                }
-            }
-            of.close();
-        }
-        catch ( FileNotFoundException e )
-        {
-            e.printStackTrace();
-        }
-        catch ( IOException e )
-        {
-            e.printStackTrace();
-        }
-    }
-
-    public static void ImportAuth( SharedPreferences auth_prefs, String path )
-    {
-        try
-        {
-            BufferedReader read_buf = new BufferedReader( new FileReader( path ) );
-            SharedPreferences.Editor auth_prefs_edit = auth_prefs.edit();
-            String s = read_buf.readLine();
-            String[] parsed = null;
-            while ( s != null )
-            {
-                parsed = s.split( " : ", 2 );
-                if ( parsed.length == 2 && parsed[0].contains( "FlickrUsername_" ) )
-                {
-                    auth_prefs_edit.putString( parsed[0], parsed[1] );
-                }
-                s = read_buf.readLine();
-            }
-            auth_prefs_edit.commit();
-            read_buf.close();
-        }
-        catch ( FileNotFoundException e )
-        {
-            e.printStackTrace();
-        }
-        catch ( IOException e )
-        {
-            e.printStackTrace();
-        }
     }
 }
