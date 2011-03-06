@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Flickr Free</string>
+	<string name="app_name">Flickr Free Library</string>
 	<string name="added_favorite">Added photo to your favorites</string>
 	<string name="authenticate">Flickr Account Authentication</string>
 	<string name="auth_code">Enter Authentication Code:</string>

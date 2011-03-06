@@ -100,14 +100,13 @@ public class AuthenticateActivity
 
     }
 
-    //FIXME find a better way to store this
     public static void registerAppParameters( Context context, String apiKey, String apiSecret, String authUrl )
     {
-        SharedPreferences prefs = context.getSharedPreferences( "Auth", MODE_APPEND );
+        SharedPreferences prefs = context.getSharedPreferences( GlobalResources.PREFERENCES_ID, 0 );
         Editor editor = prefs.edit();
-        editor.putString( "api_key", apiKey );
-        editor.putString( "api_secret", apiSecret );
-        editor.putString( "auth_url", authUrl );
+        editor.putString( GlobalResources.PREF_API_KEY, apiKey );
+        editor.putString( GlobalResources.PREF_API_SECRET, apiSecret );
+        editor.putString( GlobalResources.PREF_AUTH_URL, authUrl );
         editor.commit();
     }
 
@@ -117,7 +116,7 @@ public class AuthenticateActivity
         super.onCreate( savedInstanceState );
         requestWindowFeature( Window.FEATURE_PROGRESS );
 
-        m_auth_prefs = getSharedPreferences( "Auth", 0 );
+        m_auth_prefs = getSharedPreferences( GlobalResources.PREFERENCES_ID, 0 );
         m_fail_msg = "";
         setResult( Activity.RESULT_CANCELED );
 
@@ -199,11 +198,11 @@ public class AuthenticateActivity
             }
 
         } );
-        SharedPreferences auth_prefs = getSharedPreferences( "Auth", 0 );
-        if ( !auth_prefs.contains( "HasBeenRun" ) )
+
+        if ( !m_auth_prefs.contains( GlobalResources.PREF_HASBEENRUN ) )
         {
-            SharedPreferences.Editor auth_prefs_editor = auth_prefs.edit();
-            auth_prefs_editor.putBoolean( "HasBeenRun", true );
+            SharedPreferences.Editor auth_prefs_editor = m_auth_prefs.edit();
+            auth_prefs_editor.putBoolean( GlobalResources.PREF_HASBEENRUN, true );
             auth_prefs_editor.commit();
             showDialog( DIALOG_HELP );
         }
@@ -257,7 +256,7 @@ public class AuthenticateActivity
                 return true;
             }
         } );
-        String authUrl = m_auth_prefs.getString( "auth_url", "" );
+        String authUrl = m_auth_prefs.getString( GlobalResources.PREF_AUTH_URL, "" );
         wv.loadUrl( authUrl );
         new WebProgressTask().execute( ( (WebView) findViewById( R.id.AuthWeb ) ) );
     }
@@ -289,20 +288,26 @@ public class AuthenticateActivity
                     String fullname = JSONParser.getString( json_obj, "auth/user/fullname" );
 
                     // Get the "Auth" Shared preferences object to save authentication information
-                    m_auth_prefs = getSharedPreferences( "Auth", 0 );
+                    m_auth_prefs = getSharedPreferences( GlobalResources.PREFERENCES_ID, 0 );
 
                     // Get the editor for auth_prefs
                     SharedPreferences.Editor auth_prefs_editor = m_auth_prefs.edit();
 
                     // Save all of the current authentication information. This will be the default account
                     // the next time the app is started.
-                    auth_prefs_editor.putString( "full_token", JSONParser.getString( json_obj, "auth/token/_content" ) );
-                    auth_prefs_editor.putString( "perms", JSONParser.getString( json_obj, "auth/perms/_content" ) );
-                    auth_prefs_editor.putString( "nsid", JSONParser.getString( json_obj, "auth/user/nsid" ) );
-                    auth_prefs_editor.putString( "username", username );
-                    auth_prefs_editor.putString( "realname", fullname );
-                    auth_prefs_editor.putString( "displayname", fullname.equals( "" ) ? username : fullname + " ("
-                        + username + ")" );
+                    auth_prefs_editor.putString( GlobalResources.PREF_FULL_TOKEN,
+                                                 JSONParser.getString( json_obj, "auth/token/_content" ) );
+                    auth_prefs_editor.putString( GlobalResources.PREF_PERMS,
+                                                 JSONParser.getString( json_obj, "auth/perms/_content" ) );
+                    auth_prefs_editor.putString( GlobalResources.PREF_USERID,
+                                                 JSONParser.getString( json_obj, "auth/user/nsid" ) );
+                    auth_prefs_editor.putString( GlobalResources.PREF_USERNAME, username );
+                    auth_prefs_editor.putString( GlobalResources.PREF_REALNAME, fullname );
+                    auth_prefs_editor.putString( GlobalResources.PREF_DISPLAYNAME, fullname.equals( "" ) ? username
+                                                                                                        : fullname
+                                                                                                            + " ("
+                                                                                                            + username
+                                                                                                            + ")" );
 
                     // Save the entire JSON Authentication object under the username so it can be retrieved
                     // when switching accounts.
@@ -460,57 +465,12 @@ public class AuthenticateActivity
         return err_dialog;
     }
 
-    public static boolean SetActiveUser( SharedPreferences prefs, String username )
-    {
-        return AuthenticateActivity.SetActiveUser( prefs, username, true );
-    }
-
     public static boolean IsLoggedIn( Context context )
     {
-        String token = ( (SharedPreferences) context.getSharedPreferences( "Auth", 0 ) ).getString( "full_token", "" );
+        String token = ( (SharedPreferences) context.getSharedPreferences( GlobalResources.PREFERENCES_ID, 0 ) )
+            .getString( GlobalResources.PREF_FULL_TOKEN, "" );
 
         return ( !token.equals( "" ) );
-    }
-
-    public static boolean SetActiveUser( SharedPreferences prefs, String username, boolean logout_if_invalid )
-    {
-        try
-        {
-            SharedPreferences.Editor prefs_editor = prefs.edit();
-            String user_obj_str = username.equals( "" ) ? "" : prefs.getString( "FlickrUsername_" + username, "" );
-
-            if ( user_obj_str.equals( "" ) )
-            {
-                if ( logout_if_invalid )
-                {
-                    AuthenticateActivity.LogOut( prefs );
-                }
-                return false;
-            }
-            else
-            {
-                JSONObject user_obj = new JSONObject( user_obj_str );
-
-                // Retrieve the full name from the object.
-                String fullname = user_obj.getJSONObject( "auth" ).getJSONObject( "user" ).getString( "fullname" );
-
-                // Save all of the current authentication information. This will be the default account
-                // the next time the app is started.
-                prefs_editor.putString( "full_token", JSONParser.getString( user_obj, "auth/token/_content" ) );
-                prefs_editor.putString( "perms", JSONParser.getString( user_obj, "auth/perms/_content" ) );
-                prefs_editor.putString( "nsid", JSONParser.getString( user_obj, "auth/user/nsid" ) );
-                prefs_editor.putString( "username", username );
-                prefs_editor.putString( "realname", fullname );
-                prefs_editor.putString( "displayname", fullname.equals( "" ) ? username : fullname + " (" + username
-                    + ")" );
-                prefs_editor.commit();
-            }
-        }
-        catch ( JSONException e )
-        {
-            e.printStackTrace();
-        }
-        return true;
     }
 
     public static void RemoveUser( SharedPreferences prefs, String username )
@@ -531,12 +491,12 @@ public class AuthenticateActivity
         // Get the editor for prefs
         SharedPreferences.Editor prefs_editor = prefs.edit();
 
-        prefs_editor.remove( "full_token" );
-        prefs_editor.remove( "perms" );
-        prefs_editor.remove( "nsid" );
-        prefs_editor.remove( "username" );
-        prefs_editor.remove( "realname" );
-        prefs_editor.remove( "displayname" );
+        prefs_editor.remove( GlobalResources.PREF_FULL_TOKEN );
+        prefs_editor.remove( GlobalResources.PREF_PERMS );
+        prefs_editor.remove( GlobalResources.PREF_USERID );
+        prefs_editor.remove( GlobalResources.PREF_USERNAME );
+        prefs_editor.remove( GlobalResources.PREF_REALNAME );
+        prefs_editor.remove( GlobalResources.PREF_DISPLAYNAME );
         prefs_editor.commit();
     }
 

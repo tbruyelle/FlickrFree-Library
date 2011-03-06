@@ -45,9 +45,12 @@ public class RestClient
 
     public static void setAuth( Context context )
     {
-        m_apikey = context.getSharedPreferences( "Auth", 0 ).getString( "api_key", "" );
-        m_secret = context.getSharedPreferences( "Auth", 0 ).getString( "api_secret", "" );
-        m_fulltoken = context.getSharedPreferences( "Auth", 0 ).getString( "full_token", "" );
+        m_apikey = context.getSharedPreferences( GlobalResources.PREFERENCES_ID, 0 )
+            .getString( GlobalResources.PREF_API_KEY, "" );
+        m_secret = context.getSharedPreferences( GlobalResources.PREFERENCES_ID, 0 )
+            .getString( GlobalResources.PREF_API_SECRET, "" );
+        m_fulltoken = context.getSharedPreferences( GlobalResources.PREFERENCES_ID, 0 )
+            .getString( GlobalResources.PREF_FULL_TOKEN, "" );
     }
 
     private static String convertStreamToString( InputStream is )
