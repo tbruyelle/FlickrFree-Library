@@ -13,7 +13,6 @@
  */
 package com.kamosoft.flickr.model;
 
-import java.util.List;
 
 /**
  * Model object for the root element
@@ -21,5 +20,9 @@ import java.util.List;
  */
 public class JsonFlickrApi
 {
-    List<Item> items;
+    Items items;
+
+    String stat;
+
+    
 }

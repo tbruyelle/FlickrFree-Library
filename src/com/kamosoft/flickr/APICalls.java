@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 import com.kamosoft.flickr.model.JsonFlickrApi;
 
 public class APICalls
@@ -16,22 +17,32 @@ public class APICalls
 
     public static JsonFlickrApi getActivityUserPhotos( String userId, String timeFrame, String perPage, String page )
     {
+        String result;
         try
         {
-            String result = RestClient.CallFunctionReturnString( "flickr.activity.userPhotos", new String[] {
+            result = RestClient.CallFunctionReturnString( "flickr.activity.userPhotos", new String[] {
                 "user_id",
                 "timeframe",
                 "per_page",
                 "page" }, new String[] { userId, timeFrame, perPage, page } ); // replace all restclient function with these returnString functions
-
-            /* remove the non-json string jsonFlickrApi( "*" ) */
-            String json = result.substring( 14, result.length() - 2 );
-            return new Gson().fromJson( json, JsonFlickrApi.class );
+            try
+            {
+                /* remove the non-json string jsonFlickrApi( "*" ) */
+                String json = result.substring( 14, result.length() - 2 );
+                return new Gson().fromJson( json, JsonFlickrApi.class );
+            }
+            catch ( JsonParseException e )
+            {
+                Log.e( "Flickr-Library", "JsonParseException during call getActivityUserPhotos" );
+                Log.e( "Flickr-Library", "Json=\n" + result );
+                Log.e( "Flickr-Library", e.getMessage() );
+            }
         }
         catch ( IOException e )
         {
             Log.e( "Flickr-Library", "IOException during call getActivityUserPhotos" );
             Log.e( "Flickr-Library", e.getMessage() );
+
         }
         return null;
     }

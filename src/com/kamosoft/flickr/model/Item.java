@@ -31,6 +31,10 @@ package com.kamosoft.flickr.model;
  */
 public class Item
 {
+    enum Type {
+        photo
+    };
+
     String type;
 
     String id;
@@ -43,17 +47,17 @@ public class Item
 
     String server;
 
-    String commentsold;
-
-    String commensnew;
-
-    String views;
-
-    String photos;
-
-    String more;
-
     Title title;
 
     Activity activity;
+
+    int comment;
+
+    int farm;
+
+    int notes;
+
+    int faves;
+
+    int views;
 }

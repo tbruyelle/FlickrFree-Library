@@ -29,12 +29,11 @@ import org.apache.http.params.HttpParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.zmosoft.flickrfree.JavaMD5Sum;
-import com.zmosoft.flickrfree.MultipartEntityMonitored;
-
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+
+import com.zmosoft.flickrfree.JavaMD5Sum;
+import com.zmosoft.flickrfree.MultipartEntityMonitored;
 
 public class RestClient
 {
@@ -47,11 +46,11 @@ public class RestClient
 
     private static String m_UPLOADURL = "http://api.flickr.com/services/upload/";
 
-    public static void setAuth( Activity activity )
+    public static void setAuth( Context context )
     {
-        m_apikey = activity.getSharedPreferences( "Auth", 0 ).getString( "api_key", "" );
-        m_secret = activity.getSharedPreferences( "Auth", 0 ).getString( "api_secret", "" );
-        m_fulltoken = activity.getSharedPreferences( "Auth", 0 ).getString( "full_token", "" );
+        m_apikey = context.getSharedPreferences( "Auth", 0 ).getString( "api_key", "" );
+        m_secret = context.getSharedPreferences( "Auth", 0 ).getString( "api_secret", "" );
+        m_fulltoken = context.getSharedPreferences( "Auth", 0 ).getString( "full_token", "" );
     }
 
     private static String convertStreamToString( InputStream is )
@@ -153,7 +152,8 @@ public class RestClient
         return CallFunction( methodName, paramNames, paramVals, true, false, "", null );
     }
 
-    public static String CallFunctionReturnString( String methodName, String[] paramNames, String[] paramVals ) throws IOException
+    public static String CallFunctionReturnString( String methodName, String[] paramNames, String[] paramVals )
+        throws IOException
     {
         return CallFunctionReturnString( methodName, paramNames, paramVals, true, false, "", null );
     }

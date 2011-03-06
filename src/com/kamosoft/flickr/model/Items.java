@@ -13,29 +13,20 @@
  */
 package com.kamosoft.flickr.model;
 
+import java.util.Collection;
+
 /**
- * Model object for event Element
- * <event type="comment"
-            user="12037949754@N01" username="Bees"
-            dateadded="1144086424">yay</event>
  * @author tom
- * 
  */
-public class Event
+public class Items
 {
-    enum Type {
-        comment, added_to_gallery, fave
-    };
+    Collection<Item> item;
 
-    String type;
+    int page;
 
-    String user;
+    int pages;
 
-    String username;
+    int perpage;
 
-    String dateadded;
-
-    String _content;
-
-    String galleryid;
+    int total;
 }

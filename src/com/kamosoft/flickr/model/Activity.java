@@ -13,7 +13,7 @@
  */
 package com.kamosoft.flickr.model;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Model object for Activity element
@@ -21,5 +21,5 @@ import java.util.List;
  */
 public class Activity
 {
-    List<Event> events;
+    Collection<Event> event;
 }
