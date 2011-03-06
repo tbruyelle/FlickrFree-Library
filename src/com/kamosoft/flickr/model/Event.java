@@ -23,19 +23,67 @@ package com.kamosoft.flickr.model;
  */
 public class Event
 {
-    enum Type {
+    public enum Type {
         comment, added_to_gallery, fave
     };
 
-    String type;
+    private String type;
 
-    String user;
+    private String user;
 
-    String username;
+    private String username;
 
-    String dateadded;
+    private String dateadded;
 
-    String _content;
+    private String _content;
 
-    String galleryid;
+    private String galleryid;
+
+    /**
+     * @return the type
+     */
+    public String getType()
+    {
+        return type;
+    }
+
+    /**
+     * @return the user
+     */
+    public String getUser()
+    {
+        return user;
+    }
+
+    /**
+     * @return the username
+     */
+    public String getUsername()
+    {
+        return username;
+    }
+
+    /**
+     * @return the dateadded
+     */
+    public String getDateadded()
+    {
+        return dateadded;
+    }
+
+    /**
+     * @return the _content
+     */
+    public String get_content()
+    {
+        return _content;
+    }
+
+    /**
+     * @return the galleryid
+     */
+    public String getGalleryid()
+    {
+        return galleryid;
+    }
 }

@@ -18,5 +18,13 @@ package com.kamosoft.flickr.model;
  */
 public class Title
 {
-    String _content;
+    private String _content;
+
+    /**
+     * @return the _content
+     */
+    public String getContent()
+    {
+        return _content;
+    }
 }

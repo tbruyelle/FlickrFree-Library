@@ -16,17 +16,58 @@ package com.kamosoft.flickr.model;
 import java.util.Collection;
 
 /**
+ * Model object for Items element
  * @author tom
  */
 public class Items
 {
-    Collection<Item> item;
+    private Collection<Item> item;
 
-    int page;
+    private int page;
 
-    int pages;
+    private int pages;
 
-    int perpage;
+    private int perpage;
 
-    int total;
+    private int total;
+
+    /**
+     * @return the item
+     */
+    public Collection<Item> getItem()
+    {
+        return item;
+    }
+
+    /**
+     * @return the page
+     */
+    public int getPage()
+    {
+        return page;
+    }
+
+    /**
+     * @return the pages
+     */
+    public int getPages()
+    {
+        return pages;
+    }
+
+    /**
+     * @return the perpage
+     */
+    public int getPerpage()
+    {
+        return perpage;
+    }
+
+    /**
+     * @return the total
+     */
+    public int getTotal()
+    {
+        return total;
+    }
 }

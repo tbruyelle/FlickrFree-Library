@@ -100,6 +100,7 @@ public class AuthenticateActivity
 
     }
 
+    //FIXME find a better way to store this
     public static void registerAppParameters( Context context, String apiKey, String apiSecret, String authUrl )
     {
         SharedPreferences prefs = context.getSharedPreferences( "Auth", MODE_APPEND );

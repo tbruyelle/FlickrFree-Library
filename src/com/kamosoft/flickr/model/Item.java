@@ -31,33 +31,138 @@ package com.kamosoft.flickr.model;
  */
 public class Item
 {
-    enum Type {
+    public enum Type {
         photo
     };
 
-    String type;
+    private String type;
 
-    String id;
+    private String id;
 
-    String owner;
+    private String owner;
 
-    String primary;
+    private String primary;
 
-    String secret;
+    private String secret;
 
-    String server;
+    private String server;
 
-    Title title;
+    private Title title;
 
-    Activity activity;
+    private Activity activity;
 
-    int comment;
+    private int comment;
 
-    int farm;
+    private int farm;
 
-    int notes;
+    private int notes;
 
-    int faves;
+    private int faves;
 
-    int views;
+    private int views;
+
+    /**
+     * @return the type
+     */
+    public String getType()
+    {
+        return type;
+    }
+
+    /**
+     * @return the id
+     */
+    public String getId()
+    {
+        return id;
+    }
+
+    /**
+     * @return the owner
+     */
+    public String getOwner()
+    {
+        return owner;
+    }
+
+    /**
+     * @return the primary
+     */
+    public String getPrimary()
+    {
+        return primary;
+    }
+
+    /**
+     * @return the secret
+     */
+    public String getSecret()
+    {
+        return secret;
+    }
+
+    /**
+     * @return the server
+     */
+    public String getServer()
+    {
+        return server;
+    }
+
+    /**
+     * @return the title
+     */
+    public Title getTitle()
+    {
+        return title;
+    }
+
+    /**
+     * @return the activity
+     */
+    public Activity getActivity()
+    {
+        return activity;
+    }
+
+    /**
+     * @return the comment
+     */
+    public int getComment()
+    {
+        return comment;
+    }
+
+    /**
+     * @return the farm
+     */
+    public int getFarm()
+    {
+        return farm;
+    }
+
+    /**
+     * @return the notes
+     */
+    public int getNotes()
+    {
+        return notes;
+    }
+
+    /**
+     * @return the faves
+     */
+    public int getFaves()
+    {
+        return faves;
+    }
+
+    /**
+     * @return the views
+     */
+    public int getViews()
+    {
+        return views;
+    }
+
 }

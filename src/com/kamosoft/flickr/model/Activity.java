@@ -21,5 +21,13 @@ import java.util.Collection;
  */
 public class Activity
 {
-    Collection<Event> event;
+    private Collection<Event> event;
+
+    /**
+     * @return the event
+     */
+    public Collection<Event> getEvent()
+    {
+        return event;
+    }
 }

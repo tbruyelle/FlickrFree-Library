@@ -13,16 +13,46 @@
  */
 package com.kamosoft.flickr.model;
 
-
 /**
  * Model object for the root element
  * @author tom
  */
 public class JsonFlickrApi
 {
-    Items items;
+    private Items items;
 
-    String stat;
+    private String stat;
 
-    
+    public enum Status {
+        ok, fail
+    };
+
+    /**
+     * @return true if the response status is OK
+     */
+    public boolean isStatusOk()
+    {
+        if ( stat == null )
+        {
+            return false;
+        }
+        return stat.equals( Status.ok );
+    }
+
+    /**
+     * @return the items
+     */
+    public Items getItems()
+    {
+        return items;
+    }
+
+    /**
+     * @return the stat
+     */
+    public String getStat()
+    {
+        return stat;
+    }
+
 }
