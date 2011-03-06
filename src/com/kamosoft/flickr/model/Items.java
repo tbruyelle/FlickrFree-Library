@@ -34,7 +34,7 @@ public class Items
     /**
      * @return the item
      */
-    public Collection<Item> getItem()
+    public Collection<Item> getItems()
     {
         return item;
     }

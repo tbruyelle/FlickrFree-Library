@@ -74,7 +74,7 @@ public class Event
     /**
      * @return the _content
      */
-    public String get_content()
+    public String getContent()
     {
         return _content;
     }

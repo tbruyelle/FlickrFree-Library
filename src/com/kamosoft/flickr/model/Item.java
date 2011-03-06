@@ -64,9 +64,13 @@ public class Item
     /**
      * @return the type
      */
-    public String getType()
+    public Type getType()
     {
-        return type;
+        if ( type.equals( Type.photo ) )
+        {
+            return Type.photo;
+        }
+        return null;
     }
 
     /**

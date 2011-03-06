@@ -26,7 +26,7 @@ public class Activity
     /**
      * @return the event
      */
-    public Collection<Event> getEvent()
+    public Collection<Event> getEvents()
     {
         return event;
     }
