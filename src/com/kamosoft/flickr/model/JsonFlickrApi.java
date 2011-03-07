@@ -21,6 +21,8 @@ public class JsonFlickrApi
 {
     private Items items;
 
+    private Photo photo;
+
     private String stat;
 
     public enum Status {
@@ -45,6 +47,14 @@ public class JsonFlickrApi
     public Items getItems()
     {
         return items;
+    }
+
+    /**
+     * @return the photo
+     */
+    public Photo getPhoto()
+    {
+        return photo;
     }
 
     /**

@@ -53,7 +53,7 @@ public class Item
 
     private int comment;
 
-    private int farm;
+    private String farm;
 
     private int notes;
 
@@ -66,11 +66,7 @@ public class Item
      */
     public Type getType()
     {
-        if ( type.equals( Type.photo ) )
-        {
-            return Type.photo;
-        }
-        return null;
+        return Type.valueOf( type );
     }
 
     /**
@@ -140,7 +136,7 @@ public class Item
     /**
      * @return the farm
      */
-    public int getFarm()
+    public String getFarm()
     {
         return farm;
     }

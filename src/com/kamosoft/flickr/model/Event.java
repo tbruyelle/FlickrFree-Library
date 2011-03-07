@@ -42,9 +42,9 @@ public class Event
     /**
      * @return the type
      */
-    public String getType()
+    public Type getType()
     {
-        return type;
+        return Type.valueOf( type );
     }
 
     /**

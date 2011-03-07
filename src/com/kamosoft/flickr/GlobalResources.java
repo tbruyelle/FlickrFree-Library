@@ -25,6 +25,8 @@ import android.net.NetworkInfo;
 import android.os.Environment;
 import android.util.Log;
 
+import com.kamosoft.flickr.model.Photo;
+
 public class GlobalResources
 {
     public static String PREFERENCES_ID = "FlickrFree-Library";
@@ -198,6 +200,12 @@ public class GlobalResources
         return displayname;
     }
 
+    public static Bitmap getBitmapFromURL( Photo photo, ImgSize imgSize )
+        throws JSONException, IOException
+    {
+        return getBitmapFromURL( getImageUrl( photo, imgSize ) );
+    }
+
     public static Bitmap getBitmapFromURL( String url )
         throws JSONException, IOException
     {
@@ -212,6 +220,12 @@ public class GlobalResources
         is.close();
 
         return bm;
+    }
+
+    public static String getImageUrl( Photo photo, ImgSize imgSize )
+    {
+        return getImageURL( photo.getFarm(), photo.getServer(), photo.getId(), photo.getSecret(), imgSize,
+                            photo.getOriginalformat() );
     }
 
     public static String getImageURL( String farm, String server, String id, String secret, ImgSize size,
