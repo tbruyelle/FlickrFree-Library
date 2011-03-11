@@ -17,11 +17,11 @@ To authenticate you need to :
         AuthenticateActivity.registerAppParameters( this, api_key, api_secret, auth_url );
         RestClient.setAuth( this ); // this call will become unnecessary in next versions
 
-2. Start the activity AuthenticateActivity
+2. Start the activity `AuthenticateActivity`
 
          startActivityForResult( new Intent( this, AuthenticateActivity.class ), AUTHENTICATE );
 
-3. Override the onActivityResult to retrieve the authentication result.
+3. Override the `onActivityResult` to retrieve the authentication result.
 
         @Override
         protected void onActivityResult( int requestCode, int resultCode, Intent data )
@@ -46,5 +46,5 @@ To authenticate you need to :
 Available flickr methods
 ---------------------------
 
-* <pre>flickr.activity.userPhotos</pre> with <pre>APICalls.getActivityUserPhotos( String userId )</pre>
-* <pre>flickr.photos.getInfo</pre> with <pre>APICalls.getPhotoInfo( String photoId )</pre>
+* `flickr.activity.userPhotos` with `APICalls.getActivityUserPhotos( String userId )`
+* `flickr.photos.getInfo` with `APICalls.getPhotoInfo( String photoId )`
