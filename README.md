@@ -11,6 +11,7 @@ Authentification
 ----------------------
 
 To authenticate you need to : 
+
 1. Push your flickr application keys to the library
 
     AuthenticateActivity.registerAppParameters( this, api_key, api_secret, auth_url );
@@ -22,9 +23,9 @@ To authenticate you need to :
 
 3. Override the onActivityResult to retrieve the authentication result.
 
-    @Override
-    protected void onActivityResult( int requestCode, int resultCode, Intent data )
-    {
+     @Override
+     protected void onActivityResult( int requestCode, int resultCode, Intent data )
+     {
         super.onActivityResult( requestCode, resultCode, data );
         switch ( requestCode )
         {
@@ -39,8 +40,8 @@ To authenticate you need to :
                     Toast.makeText( this, "Auth KO !", Toast.LENGTH_SHORT ).show();
                 }
                 break;
-        }
-    }
+         }
+     }
 
 Available flickr methods
 ---------------------------
