@@ -12,13 +12,16 @@ Authentification
 
 To authenticate you need to : 
 1. Push your flickr application keys to the library
+
     AuthenticateActivity.registerAppParameters( this, api_key, api_secret, auth_url );
     RestClient.setAuth( this ); // this call will become unnecessary in next versions
 
-2. Start the activity <pre>AuthenticateActivity</pre>
+2. Start the activity AuthenticateActivity
+
      startActivityForResult( new Intent( this, AuthenticateActivity.class ), AUTHENTICATE );
 
-3. Override the <pre>onActivityResult</pre> to retrieve the authentication result.
+3. Override the onActivityResult to retrieve the authentication result.
+
     @Override
     protected void onActivityResult( int requestCode, int resultCode, Intent data )
     {
