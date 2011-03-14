@@ -197,7 +197,7 @@ public class AuthenticateActivity
             SharedPreferences.Editor auth_prefs_editor = m_auth_prefs.edit();
             auth_prefs_editor.putBoolean( GlobalResources.PREF_HASBEENRUN, true );
             auth_prefs_editor.commit();
-            showDialog( DIALOG_HELP );
+            showDialog( DIALOG_HELP );//FIXME crash here
         }
 
         if ( GlobalResources.CheckNetwork( this ) )
