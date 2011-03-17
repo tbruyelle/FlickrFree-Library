@@ -10,7 +10,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
-import com.kamosoft.flickr.model.JsonFlickrApi;
+import com.kamosoft.flickr.model.FlickrApiResult;
 
 public class APICalls
 {
@@ -20,7 +20,7 @@ public class APICalls
     //
     //    }
 
-    public static JsonFlickrApi getActivityUserPhotos( String userId, String timeFrame, String perPage, String page )
+    public static FlickrApiResult getActivityUserPhotos( String userId, String timeFrame, String perPage, String page )
     {
         String result;
         try
@@ -34,7 +34,7 @@ public class APICalls
             {
                 /* remove the non-json string jsonFlickrApi( "*" ) */
                 String json = result.substring( 14, result.length() - 2 );
-                return new Gson().fromJson( json, JsonFlickrApi.class );
+                return new Gson().fromJson( json, FlickrApiResult.class );
             }
             catch ( JsonParseException e )
             {
@@ -52,7 +52,7 @@ public class APICalls
         return null;
     }
 
-    public static JsonFlickrApi getPhotoInfo( String photoId )
+    public static FlickrApiResult getPhotoInfo( String photoId )
     {
         String result;
         try
@@ -64,7 +64,7 @@ public class APICalls
             {
                 /* remove the non-json string jsonFlickrApi( "*" ) */
                 String json = result.substring( 14, result.length() - 2 );
-                return new Gson().fromJson( json, JsonFlickrApi.class );
+                return new Gson().fromJson( json, FlickrApiResult.class );
 
             }
             catch ( JsonParseException e )
