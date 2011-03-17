@@ -207,6 +207,8 @@ public class AuthenticateActivity
         else
         {
             showDialog( DIALOG_NO_NETWORK );
+            setResult( AUTH_ERR );
+            finish();
         }
     }
 

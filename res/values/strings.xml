@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">Flickr Free Library</string>
-	<string name="added_favorite">Added photo to your favorites</string>
 	<string name="authenticate">Flickr Account Authentication</string>
 	<string name="auth_code">Enter Authentication Code:</string>
-	<string name="img_load_error_msg">The Image Failed to Load</string>
 
-	<string name="btnaddaccount">Add Account</string>
-	<string name="btnaddcommentlabel">Add Comment</string>
 	<string name="btnauthenticate">Authenticate</string>
 	<string name="btncancellabel">Cancel</string>
 	<string name="btndelete">Delete</string>
 	<string name="btngetcode">Get Code</string>
 	<string name="btnhelp">Help</string>
-	<string name="btnmanageaccts">Accounts</string>
-	<string name="btnmap">Show On Map</string>
 	<string name="btnok">OK</string>
 	<string name="btnupgrade">Upgrade</string>
 	<string name="btnnotnow">Not Now</string>
@@ -24,75 +18,7 @@
 	<string name="btnsendlabel">Send</string>
 	<string name="btnuserpagelabel">User Page</string>
 
-	<string name="chkeveryone">Everyone</string>
-	<string name="chkfriends">Friends</string>
-	<string name="chkfamily">Family</string>
-	<string name="contactsview">Contacts</string>
-
-	<string name="dlg_imgsize_title">Choose Download Size</string>
-	<string name="dlg_switch_accounts">Choose Account</string>
-	<string name="downloading">Downloading</string>
-	<string name="downloadingpicture">Downloading Picture</string>
-
-	<string name="entrymorecomments">More Comments...</string>
-	<string name="favorites">View Favorites</string>
-
-	<string name="imagecollections">Photo Collections</string>
-	<string name="imagecomments">Photo Comments</string>
-	<string name="imagecontext">Photo Context</string>
-	<string name="imageinfo">Photo Info</string>
-	<string name="imageinfo_camera">Camera</string>
-	<string name="imageinfo_datetaken">Date Taken</string>
-	<string name="imageinfo_description">Description</string>
-	<string name="imageinfo_locationtaken">Location Taken (lat, long)</string>
-	<string name="imageinfo_owner">Owner</string>
-	<string name="imageinfo_owner_location">Location</string>
-	<string name="imageinfo_tags">Photo Tags</string>
-	<string name="imagesets">Photosets</string>
-	<string name="groups">Groups</string>
-	<string name="imgfullscreen">View Photo</string>
-	<string name="imggrid_allphotos_search_results">Search Results</string>
-	<string name="imggrid_favorites">Favorites of</string>
-	<string name="imggrid_photostream">Photostream for</string>
-	<string name="imggrid_pool">Pool</string>
-	<string name="imggrid_set">Photoset</string>
-
-	<string name="lblsetscontext">Sets This Photo Belongs To</string>
-	<string name="lblgroupscontext">Groups This Photo Belongs To</string>
-	<string name="lblsearch">Search For:</string>
-	<string name="lbladdcomment">Comment:</string>
-	<string name="lblauthor">Author</string>
-	<string name="lblcomment">Comment</string>
-	<string name="lblphototags">Tags</string>
-	<string name="lblphototitle">Title</string>
-	<string name="lblgroups">Groups</string>
-	<string name="lblacccountdialog">Choose Account</string>
-	<string name="lblmanageaccounts">Manage Accounts</string>
-	<string name="lblvisibleto">Visible To:</string>
-	<string name="lblphotos">Photos</string>
-	<string name="lblcontact">Contact</string>
-	<string name="lblfriend">Friend</string>
-	<string name="lblfamily">Family</string>
-	<string name="lblnphotos">Photos</string>
-	<string name="lblsafetylevel">Safety Level:</string>
-	<string name="lbltitle">Title</string>
-	<string name="lblvalue">Value</string>
-	<string name="lblwordcomments">Comments</string>
-	<string name="lblnocomments">No Comments</string>
-	<string name="lbluploadoptions">Upload Settings</string>
-	<string name="lblwordof">of</string>
-
-	<string name="mnu_favorite">Favorite</string>
-	<string name="mnu_unfavorite">Un-Fave</string>
-	<string name="mnu_imgcomments">Comments</string>
-	<string name="mnu_imgcontext">Belongs To...</string>
-	<string name="mnu_imgdownload">Download</string>
-	<string name="mnu_imginfo">Info</string>
-	<string name="mnu_imgsize">Image Size</string>
-	<string name="mnu_imgtags">Tags</string>
-
-	<string name="newaccount">New Account</string>
-
+	
 	<string name="msgauthhelp">It is possible that you already have FlickrFree
 		authenticated on your account with a different key.\n\nI will take you
 		to the \"Apps You\'re Using\" page on Flickr to check this. When the
@@ -107,41 +33,8 @@
 	<string name="msgremoveaccount">Remove this account from FlickrFree?\n\nThis WILL
 		NOT have any effect on the actual Flickr account.</string>
 
-	<string name="otherslabel">Others</string>
-
-	<string name="picture_retrieve_error">Error Retrieving Picture</string>
-
-	<string name="readusers_permission_description">Allow app to read list of usernames authenticated
-		with FlickrFree. Does not allow access to passwords or other
-		confidential data.</string>
-	<string name="removed_favorite">Removed photo from your favorites</string>
-
-	<string name="setuser_permission_description">Allow app to change the currently active user in
-		FlickrFree. Does not allow access to passwords or other confidential
-		data.</string>
-
-	<string name="tab1">You</string>
-	<string name="tab2">Tags</string>
-	<string name="tab3">Groups</string>
-	<string name="tab1_tag">you</string>
-	<string name="tab2_tag">tags</string>
-	<string name="tab3_tag">groups</string>
-	<string name="tagsview">Picture Tags</string>
-	<string name="textauthlabel">Authentication</string>
-
 	<string name="ttlerror">Error</string>
 	<string name="ttlwarning">Warning!</string>
 	<string name="ttlhelp">Help</string>
-	<string name="ttlupgrade">Upgrade</string>
-
-	<string name="userview">User Page</string>
-	<string name="picturesettings">Picture Settings</string>
-	<string name="transferprogress">File Transfer Progress</string>
-	<string name="uploadstarting">Your Upload is Starting</string>
-	<string name="downloadstarting">Your Download is Starting</string>
-	<string name="uploadingpicture">Uploading Picture</string>
-	<string name="uploading">Uploading</string>
-	<string name="filetransfers">File Transfers</string>
-
-	<string name="youraccountlabel">Your Account</string>
+	
 </resources>
