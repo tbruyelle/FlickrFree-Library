@@ -37,19 +37,11 @@ public final class R {
         public static final int btndelete=0x7f030005;
         public static final int btngetcode=0x7f030006;
         public static final int btnhelp=0x7f030007;
-        public static final int btnnotnow=0x7f03000a;
         public static final int btnok=0x7f030008;
-        public static final int btnremoveaccount=0x7f03000c;
-        public static final int btnsearch=0x7f03000d;
-        public static final int btnsendlabel=0x7f03000e;
-        public static final int btnupgrade=0x7f030009;
-        public static final int btnupload=0x7f03000b;
-        public static final int btnuserpagelabel=0x7f03000f;
-        public static final int msgauthhelp=0x7f030010;
-        public static final int msgnnetworkerror=0x7f030011;
-        public static final int msgremoveaccount=0x7f030012;
-        public static final int ttlerror=0x7f030013;
-        public static final int ttlhelp=0x7f030015;
-        public static final int ttlwarning=0x7f030014;
+        public static final int msgauthhelp=0x7f030009;
+        public static final int msgnnetworkerror=0x7f03000a;
+        public static final int ttlerror=0x7f03000b;
+        public static final int ttlhelp=0x7f03000d;
+        public static final int ttlwarning=0x7f03000c;
     }
 }

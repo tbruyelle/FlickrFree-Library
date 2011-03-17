@@ -10,13 +10,6 @@
 	<string name="btngetcode">Get Code</string>
 	<string name="btnhelp">Help</string>
 	<string name="btnok">OK</string>
-	<string name="btnupgrade">Upgrade</string>
-	<string name="btnnotnow">Not Now</string>
-	<string name="btnupload">Upload</string>
-	<string name="btnremoveaccount">Remove Account</string>
-	<string name="btnsearch">Search</string>
-	<string name="btnsendlabel">Send</string>
-	<string name="btnuserpagelabel">User Page</string>
 
 	
 	<string name="msgauthhelp">It is possible that you already have FlickrFree
@@ -30,8 +23,6 @@
 		FlickrFree and try to add your account again.\n\nHit "OK" if you want
 		to try this, "Cancel" if you want to go back.</string>
 	<string name="msgnnetworkerror">Network Error</string>
-	<string name="msgremoveaccount">Remove this account from FlickrFree?\n\nThis WILL
-		NOT have any effect on the actual Flickr account.</string>
 
 	<string name="ttlerror">Error</string>
 	<string name="ttlwarning">Warning!</string>
