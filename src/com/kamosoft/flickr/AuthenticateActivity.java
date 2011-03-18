@@ -196,13 +196,12 @@ public class AuthenticateActivity
 
         } );
 
-        //if ( !m_auth_prefs.contains( GlobalResources.PREF_HASBEENRUN ) )
-        if ( true )
+        if ( !m_auth_prefs.contains( GlobalResources.PREF_HASBEENRUN ) )        
         {
             SharedPreferences.Editor auth_prefs_editor = m_auth_prefs.edit();
             auth_prefs_editor.putBoolean( GlobalResources.PREF_HASBEENRUN, true );
             auth_prefs_editor.commit();
-            showDialog( DIALOG_HELP );//FIXME crash here
+            showDialog( DIALOG_HELP );
         }
 
         if ( GlobalResources.CheckNetwork( this ) )
