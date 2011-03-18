@@ -11,37 +11,40 @@ public final class R {
     public static final class attr {
     }
     public static final class id {
-        public static final int AuthHelpInfo=0x7f040000;
-        public static final int AuthInputLayout=0x7f040006;
-        public static final int AuthLayout=0x7f040002;
-        public static final int AuthWeb=0x7f040003;
-        public static final int BtnOK=0x7f040001;
-        public static final int LblAuthCode=0x7f040005;
-        public static final int TokenInputLayout=0x7f040004;
-        public static final int authnum1=0x7f040007;
-        public static final int authnum2=0x7f040008;
-        public static final int authnum3=0x7f040009;
-        public static final int btnAuthenticate=0x7f04000b;
-        public static final int btnHelp=0x7f04000a;
+        public static final int AuthHelpInfo=0x7f050000;
+        public static final int AuthInputLayout=0x7f050006;
+        public static final int AuthLayout=0x7f050002;
+        public static final int AuthWeb=0x7f050003;
+        public static final int BtnOK=0x7f050001;
+        public static final int LblAuthCode=0x7f050005;
+        public static final int TokenInputLayout=0x7f050004;
+        public static final int authnum1=0x7f050007;
+        public static final int authnum2=0x7f050008;
+        public static final int authnum3=0x7f050009;
+        public static final int btnAuthenticate=0x7f05000b;
+        public static final int btnHelp=0x7f05000a;
     }
     public static final class layout {
         public static final int auth_help_dialog_layout=0x7f020000;
         public static final int authenticate=0x7f020001;
     }
+    public static final class raw {
+        public static final int authenticate_help=0x7f030000;
+    }
     public static final class string {
-        public static final int app_name=0x7f030000;
-        public static final int auth_code=0x7f030002;
-        public static final int authenticate=0x7f030001;
-        public static final int btnauthenticate=0x7f030003;
-        public static final int btncancellabel=0x7f030004;
-        public static final int btndelete=0x7f030005;
-        public static final int btngetcode=0x7f030006;
-        public static final int btnhelp=0x7f030007;
-        public static final int btnok=0x7f030008;
-        public static final int msgauthhelp=0x7f030009;
-        public static final int msgnnetworkerror=0x7f03000a;
-        public static final int ttlerror=0x7f03000b;
-        public static final int ttlhelp=0x7f03000d;
-        public static final int ttlwarning=0x7f03000c;
+        public static final int app_name=0x7f040000;
+        public static final int auth_code=0x7f040002;
+        public static final int authenticate=0x7f040001;
+        public static final int btnauthenticate=0x7f040003;
+        public static final int btncancellabel=0x7f040004;
+        public static final int btndelete=0x7f040005;
+        public static final int btngetcode=0x7f040006;
+        public static final int btnhelp=0x7f040007;
+        public static final int btnok=0x7f040008;
+        public static final int msgauthhelp=0x7f040009;
+        public static final int msgnnetworkerror=0x7f04000a;
+        public static final int ttlerror=0x7f04000b;
+        public static final int ttlhelp=0x7f04000d;
+        public static final int ttlwarning=0x7f04000c;
     }
 }

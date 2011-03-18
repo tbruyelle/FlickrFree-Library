@@ -2,6 +2,8 @@ package com.kamosoft.flickr;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,11 +17,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -192,7 +196,8 @@ public class AuthenticateActivity
 
         } );
 
-        if ( !m_auth_prefs.contains( GlobalResources.PREF_HASBEENRUN ) )
+        //if ( !m_auth_prefs.contains( GlobalResources.PREF_HASBEENRUN ) )
+        if ( true )
         {
             SharedPreferences.Editor auth_prefs_editor = m_auth_prefs.edit();
             auth_prefs_editor.putBoolean( GlobalResources.PREF_HASBEENRUN, true );
@@ -386,24 +391,10 @@ public class AuthenticateActivity
                 err_dialog = builder.create();
                 break;
             case DIALOG_HELP:
-                AssetManager assetManager = getAssets();
-                InputStream stream = null;
-                String help_text = "";
+
                 try
                 {
-                    stream = assetManager.open( "authenticate_help.html" );
-                    if ( stream != null )
-                    {
-                        byte[] buffer;
-                        int result = 0;
-                        while ( result >= 0 )
-                        {
-                            buffer = new byte[256];
-                            result = stream.read( buffer );
-                            help_text += new String( buffer );
-                        }
-                    }
-                    stream.close();
+                    String help_text = getFileContent( getResources(), R.raw.authenticate_help );
 
                     builder = new AlertDialog.Builder( this );
                     LayoutInflater inflater = (LayoutInflater) this.getSystemService( LAYOUT_INFLATER_SERVICE );
@@ -440,6 +431,7 @@ public class AuthenticateActivity
                 }
                 catch ( IOException e )
                 {
+                    Log.e( "FlickrFree-Library", e.getMessage(), e );
                 }
                 break;
             case DIALOG_NO_NETWORK:
@@ -455,9 +447,34 @@ public class AuthenticateActivity
                     } );
                 err_dialog = builder.create();
                 break;
+
+            default:
+                Log.e( "FlickrFree-Library", "Unable to create dialog with id " + id );
         }
 
         return err_dialog;
+    }
+
+    public String getFileContent( Resources resources, int rawId )
+        throws IOException
+    {
+        InputStream is = resources.openRawResource( rawId );
+
+        InputStreamReader isr = new InputStreamReader( is, Charset.forName( "ISO-8859-1" ) );
+
+        // We guarantee that the available method returns the total
+        // size of the asset... of course, this does mean that a single
+        // asset can't be more than 2 gigs.
+        int size = is.available();
+
+        // Read the entire asset into a local byte buffer.
+        char[] buffer = new char[size];
+        isr.read( buffer );
+        isr.close();
+        is.close();
+
+        // Convert the buffer into a string.
+        return new String( buffer );
     }
 
     public static boolean IsLoggedIn( Context context )
