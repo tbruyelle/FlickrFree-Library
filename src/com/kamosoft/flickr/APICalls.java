@@ -14,22 +14,20 @@ import com.kamosoft.flickr.model.FlickrApiResult;
 
 public class APICalls
 {
-    //TODO create generic method
-    //    private static T<T> callApi( String methodName, String[] paramNames, String[] paramValues, T returnClass )
-    //    {
-    //
-    //    }
-
-    public static FlickrApiResult getActivityUserPhotos( String userId, String timeFrame, String perPage, String page )
+    /**
+     * Common method to make Flickr API Calls
+     * @param methodName Flickr api method name
+     * @param paramNames parameter names
+     * @param paramValues parameter values
+     * @return FlickrApiResult
+     */
+    private static FlickrApiResult callApi( String methodName, String[] paramNames, String[] paramValues )
     {
         String result;
         try
         {
-            result = RestClient.CallFunctionReturnString( "flickr.activity.userPhotos", new String[] {
-                "user_id",
-                "timeframe",
-                "per_page",
-                "page" }, new String[] { userId, timeFrame, perPage, page } ); // replace all restclient function with these returnString functions
+            // TODO replace all restclient function with these returnString functions, then rename
+            result = RestClient.CallFunctionReturnString( methodName, paramNames, paramValues );
             try
             {
                 /* remove the non-json string jsonFlickrApi( "*" ) */
@@ -38,53 +36,61 @@ public class APICalls
             }
             catch ( JsonParseException e )
             {
-                Log.e( "Flickr-Library", "JsonParseException during call getActivityUserPhotos" );
+                Log.e( "Flickr-Library", "JsonParseException during call " + methodName );
                 Log.e( "Flickr-Library", "Json=\n" + result );
                 Log.e( "Flickr-Library", e.getMessage() );
             }
         }
         catch ( IOException e )
         {
-            Log.e( "Flickr-Library", "IOException during call getActivityUserPhotos" );
+            Log.e( "Flickr-Library", "IOException during call " + methodName );
             Log.e( "Flickr-Library", e.getMessage() );
 
         }
         return null;
     }
 
+    /**
+     * Retrieve the last user photo activity
+     * @param userId
+     * @param timeFrame
+     * @param perPage
+     * @param page
+     * @return FlickrApiResult
+     */
+    public static FlickrApiResult getActivityUserPhotos( String userId, String timeFrame, String perPage, String page )
+    {
+        return callApi( "flickr.activity.userPhotos", new String[] { "user_id", "timeframe", "per_page", "page" },
+                        new String[] { userId, timeFrame, perPage, page } );
+    }
+
+    /**
+     * Retrieve the last user comment activity
+     * @param userId
+     * @param perPage
+     * @param page
+     * @return FlickrApiResult
+     */
+    public static FlickrApiResult getActivityUserComments( String userId, String perPage, String page )
+    {
+        return callApi( "flickr.activity.userComments", new String[] { "user_id", "per_page", "page" }, new String[] {
+            userId,
+            perPage,
+            page } );
+    }
+
+    /**
+     * Retrieve photo information
+     * @param photoId
+     * @return FlickrApiResult
+     */
     public static FlickrApiResult getPhotoInfo( String photoId )
     {
-        String result;
-        try
-        {
-            result = RestClient.CallFunctionReturnString( "flickr.photos.getInfo", new String[] { "photo_id" },
-                                                          new String[] { photoId } );
-
-            try
-            {
-                /* remove the non-json string jsonFlickrApi( "*" ) */
-                String json = result.substring( 14, result.length() - 2 );
-                return new Gson().fromJson( json, FlickrApiResult.class );
-
-            }
-            catch ( JsonParseException e )
-            {
-                Log.e( "Flickr-Library", "JsonParseException during call getActivityUserPhotos" );
-                Log.e( "Flickr-Library", "Json=\n" + result );
-                Log.e( "Flickr-Library", e.getMessage() );
-            }
-        }
-        catch ( IOException e )
-        {
-            Log.e( "Flickr-Library", "IOException during call getActivityUserPhotos" );
-            Log.e( "Flickr-Library", e.getMessage() );
-
-        }
-        return null;
+        return callApi( "flickr.photos.getInfo", new String[] { "photo_id" }, new String[] { photoId } );
     }
 
     /*
-     * Methods from flir-free not migred to return a jsonFlicrApi 
+     * Methods from flirck-free not migred to return a FlicrApiResult 
      */
 
     public static JSONObject peopleGetInfo( String userid )
