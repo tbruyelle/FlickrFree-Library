@@ -28,6 +28,7 @@ public class APICalls
         {
             // TODO replace all restclient function with these returnString functions, then rename
             result = RestClient.CallFunctionReturnString( methodName, paramNames, paramValues );
+            Log.d( "FlickrFree-Library", methodName + " returns " + result );
             try
             {
                 /* remove the non-json string jsonFlickrApi( "*" ) */
@@ -88,6 +89,16 @@ public class APICalls
     {
         return callApi( "flickr.photos.getInfo", new String[] { "photo_id" }, new String[] { photoId } );
     }
+
+    /**
+     * @return check the token validation
+     */
+    public static boolean authCheckToken()
+    {
+        FlickrApiResult result = callApi( "flickr.auth.checkToken", null, null );
+        return result.isStatusOk();
+    }
+    
 
     /*
      * Methods from flirck-free not migred to return a FlicrApiResult 
@@ -378,21 +389,6 @@ public class APICalls
             e.printStackTrace();
         }
         return name;
-    }
-
-    public static boolean authCheckToken()
-    {
-        JSONObject json_obj = RestClient.CallFunction( "flickr.auth.checkToken", null, null );
-        boolean rval = false;
-        try
-        {
-            rval = json_obj.has( "stat" ) && json_obj.getString( "stat" ).equals( "ok" );
-        }
-        catch ( JSONException e )
-        {
-            e.printStackTrace();
-        }
-        return rval;
     }
 
     public static JSONObject getFullToken( String minitoken )
