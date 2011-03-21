@@ -30,6 +30,8 @@ import com.kamosoft.flickr.model.Photo;
 public class GlobalResources
 {
     public static String PREFERENCES_ID = "FlickrFree-Library";
+    
+    public static String DEFAULT_APP_NAME="Flickr app";
 
     public static String PREF_APP_NAME = "app_name";
 

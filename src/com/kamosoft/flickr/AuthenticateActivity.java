@@ -16,7 +16,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -374,7 +373,8 @@ public class AuthenticateActivity
                 break;
             case DIALOG_ERR_HELP:
                 builder = new AlertDialog.Builder( this );
-                String appName = m_auth_prefs.getString( GlobalResources.PREF_APP_NAME, "FlickrFree" );
+                String appName = m_auth_prefs.getString( GlobalResources.PREF_APP_NAME,
+                                                         GlobalResources.DEFAULT_APP_NAME );
                 builder.setMessage( getString( R.string.msgauthhelp, appName, appName ) ).setTitle( R.string.ttlhelp )
                     .setIcon( android.R.drawable.ic_dialog_info )
                     .setPositiveButton( "OK", new DialogInterface.OnClickListener()
