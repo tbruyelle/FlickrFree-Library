@@ -31,6 +31,8 @@ public class GlobalResources
 {
     public static String PREFERENCES_ID = "FlickrFree-Library";
 
+    public static String PREF_APP_NAME = "app_name";
+
     public static String PREF_API_KEY = "api_key";
 
     public static String PREF_API_SECRET = "api_secret";

@@ -97,10 +97,12 @@ public class AuthenticateActivity
 
     }
 
-    public static void registerAppParameters( Context context, String apiKey, String apiSecret, String authUrl )
+    public static void registerAppParameters( Context context, String appName, String apiKey, String apiSecret,
+                                              String authUrl )
     {
         SharedPreferences prefs = context.getSharedPreferences( GlobalResources.PREFERENCES_ID, 0 );
         Editor editor = prefs.edit();
+        editor.putString( GlobalResources.PREF_APP_NAME, appName );
         editor.putString( GlobalResources.PREF_API_KEY, apiKey );
         editor.putString( GlobalResources.PREF_API_SECRET, apiSecret );
         editor.putString( GlobalResources.PREF_AUTH_URL, authUrl );
@@ -196,7 +198,7 @@ public class AuthenticateActivity
 
         } );
 
-        if ( !m_auth_prefs.contains( GlobalResources.PREF_HASBEENRUN ) )        
+        if ( !m_auth_prefs.contains( GlobalResources.PREF_HASBEENRUN ) )
         {
             SharedPreferences.Editor auth_prefs_editor = m_auth_prefs.edit();
             auth_prefs_editor.putBoolean( GlobalResources.PREF_HASBEENRUN, true );
@@ -372,7 +374,8 @@ public class AuthenticateActivity
                 break;
             case DIALOG_ERR_HELP:
                 builder = new AlertDialog.Builder( this );
-                builder.setMessage( R.string.msgauthhelp ).setTitle( R.string.ttlhelp )
+                String appName = m_auth_prefs.getString( GlobalResources.PREF_APP_NAME, "FlickrFree" );
+                builder.setMessage( getString( R.string.msgauthhelp, appName, appName ) ).setTitle( R.string.ttlhelp )
                     .setIcon( android.R.drawable.ic_dialog_info )
                     .setPositiveButton( "OK", new DialogInterface.OnClickListener()
                     {

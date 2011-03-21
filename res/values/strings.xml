@@ -12,16 +12,17 @@
 	<string name="btnok">OK</string>
 
 	
-	<string name="msgauthhelp">It is possible that you already have FlickrFree
+	<string name="msgauthhelp">It is possible that you already have %1$s
 		authenticated on your account with a different key.\n\nI will take you
 		to the \"Apps You\'re Using\" page on Flickr to check this. When the
-		page opens, check to see if \"FlickrFree\" is listed in the table
+		page opens, check to see if \"%2$s\" is listed in the table
 		under the \"Application\" column. If it is, tap the link titled
 		\"Remove permission?\" next to it (you may have to scroll to the right
 		a bit to see it).\n\nOn the next page, check the checkbox and tap the
 		button titled \"REVOKE PERMISSIONS\".\n\nWhen this is done, return to
 		FlickrFree and try to add your account again.\n\nHit "OK" if you want
 		to try this, "Cancel" if you want to go back.</string>
+    
 	<string name="msgnnetworkerror">Network Error</string>
 
 	<string name="ttlerror">Error</string>
