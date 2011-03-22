@@ -14,9 +14,19 @@
 package com.kamosoft.flickr.model;
 
 /**
- * @author tom
+ * Convenience class for mapping the flickr json element _content
+ * @author Tom
+ * created 21 mars 2011
  */
-public class Title
-    extends WithContent
+public abstract class WithContent
 {
+    private String _content;
+
+    /**
+     * @return the _content
+     */
+    public String getContent()
+    {
+        return _content;
+    }
 }

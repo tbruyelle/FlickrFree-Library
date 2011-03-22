@@ -14,9 +14,11 @@
 package com.kamosoft.flickr.model;
 
 /**
- * @author tom
+ * @author Tom
+ * created 21 mars 2011
  */
-public class Title
+public class Token
     extends WithContent
 {
+
 }

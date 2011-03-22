@@ -30,7 +30,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.util.Log;
 
 public class RestClient
 {
@@ -155,7 +154,9 @@ public class RestClient
     public static String CallFunctionReturnString( String methodName, String[] paramNames, String[] paramVals )
         throws IOException
     {
-        return CallFunctionReturnString( methodName, paramNames, paramVals, true, false, "", null );
+        String result = CallFunctionReturnString( methodName, paramNames, paramVals, true, false, "", null );
+        Log.d( methodName + " returns " + result );
+        return result;
     }
 
     public static JSONObject CallFunction( String methodName, String[] paramNames, String[] paramVals,
@@ -216,8 +217,8 @@ public class RestClient
                 }
                 catch ( UnsupportedEncodingException e )
                 {
-                    Log.e( "FlickrFree", "RestClient UnsupportedEncodingException while buliding REST URL" );
-                    Log.e( "FlickrFree", "\t" + e.getLocalizedMessage() );
+                    Log.e( "RestClient UnsupportedEncodingException while buliding REST URL" );
+                    Log.e( "\t" + e.getLocalizedMessage() );
                 }
             }
         }
@@ -359,7 +360,7 @@ public class RestClient
             return convertStreamToString( instream );
 
         }
-        Log.e( "Flickr-Library", "Unable to retrieve result" );
+        Log.e( "Unable to retrieve result" );
         return null;
     }
 
@@ -407,8 +408,8 @@ public class RestClient
                 }
                 catch ( UnsupportedEncodingException e )
                 {
-                    Log.e( "FlickrFree", "RestClient UnsupportedEncodingException while buliding REST URL" );
-                    Log.e( "FlickrFree", "\t" + e.getLocalizedMessage() );
+                    Log.e( "RestClient UnsupportedEncodingException while buliding REST URL" );
+                    Log.e( "\t" + e.getLocalizedMessage() );
                 }
             }
         }
@@ -565,12 +566,12 @@ public class RestClient
                     {
                         json.put( "stat", "fail" );
                         json.put( "fail", "Unknown Failure" );
-                        Log.e( "FlickrFree", "Upload failure: \"" + result + "\"" );
+                        Log.e( "Upload failure: \"" + result + "\"" );
                     }
                     else
                     {
                         json.put( "stat", "ok" );
-                        Log.d( "FlickrFree", "Upload success: \"" + result + "\"" );
+                        Log.d( "Upload success: \"" + result + "\"" );
                     }
                     if ( result.contains( "<photoid>" ) )
                     {
@@ -588,7 +589,7 @@ public class RestClient
                     }
                     catch ( StringIndexOutOfBoundsException e )
                     {
-                        Log.e( "FlickrFree", "HTTP GET failed to retrieve valid JSON result: \"" + result + "\"" );
+                        Log.e( "HTTP GET failed to retrieve valid JSON result: \"" + result + "\"" );
                         json = new JSONObject();
                         json.put( "stat", "fail" );
                         json.put( "fail", "Failed to retrieve data" );

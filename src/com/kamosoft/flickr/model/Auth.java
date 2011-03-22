@@ -14,9 +14,38 @@
 package com.kamosoft.flickr.model;
 
 /**
- * @author tom
+ * @author Tom
+ * created 21 mars 2011
  */
-public class Title
-    extends WithContent
+public class Auth
 {
+    private Token token;
+
+    private Perms perms;
+
+    private User user;
+
+    /**
+     * @return the token
+     */
+    public Token getToken()
+    {
+        return token;
+    }
+
+    /**
+     * @return the perms
+     */
+    public Perms getPerms()
+    {
+        return perms;
+    }
+
+    /**
+     * @return the user
+     */
+    public User getUser()
+    {
+        return user;
+    }
 }

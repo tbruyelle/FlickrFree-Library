@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.kamosoft.flickr.model.FlickrApiResult;
@@ -28,24 +26,29 @@ public class APICalls
         {
             // TODO replace all restclient function with these returnString functions, then rename
             result = RestClient.CallFunctionReturnString( methodName, paramNames, paramValues );
-            Log.d( "FlickrFree-Library", methodName + " returns " + result );
             try
             {
                 /* remove the non-json string jsonFlickrApi( "*" ) */
                 String json = result.substring( 14, result.length() - 2 );
-                return new Gson().fromJson( json, FlickrApiResult.class );
+                FlickrApiResult flickrApiResult = new Gson().fromJson( json, FlickrApiResult.class );
+                if ( !flickrApiResult.isStatusOk() )
+                {
+                    Log.w( "Method " + methodName + " returns fail status, code=\"" + flickrApiResult.getCode()
+                        + "\" message=\"" + flickrApiResult.getMessage() + "\"" );
+                }
+                return flickrApiResult;
             }
             catch ( JsonParseException e )
             {
-                Log.e( "Flickr-Library", "JsonParseException during call " + methodName );
-                Log.e( "Flickr-Library", "Json=\n" + result );
-                Log.e( "Flickr-Library", e.getMessage() );
+                Log.e( "JsonParseException during call " + methodName );
+                Log.e( "Json=\n" + result );
+                Log.e( e.getMessage(), e );
             }
         }
         catch ( IOException e )
         {
-            Log.e( "Flickr-Library", "IOException during call " + methodName );
-            Log.e( "Flickr-Library", e.getMessage() );
+            Log.e( "IOException during call " + methodName );
+            Log.e( e.getMessage(), e );
 
         }
         return null;
@@ -98,7 +101,6 @@ public class APICalls
         FlickrApiResult result = callApi( "flickr.auth.checkToken", null, null );
         return result.isStatusOk();
     }
-    
 
     /*
      * Methods from flirck-free not migred to return a FlicrApiResult 

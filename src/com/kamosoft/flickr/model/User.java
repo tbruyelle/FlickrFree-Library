@@ -14,9 +14,38 @@
 package com.kamosoft.flickr.model;
 
 /**
- * @author tom
+ * @author Tom
+ * created 21 mars 2011
  */
-public class Title
-    extends WithContent
+public class User
 {
+    private String nsid;
+
+    private String username;
+
+    private String fullname;
+
+    /**
+     * @return the nsid
+     */
+    public String getNsid()
+    {
+        return nsid;
+    }
+
+    /**
+     * @return the username
+     */
+    public String getUsername()
+    {
+        return username;
+    }
+
+    /**
+     * @return the fullname
+     */
+    public String getFullname()
+    {
+        return fullname;
+    }
 }

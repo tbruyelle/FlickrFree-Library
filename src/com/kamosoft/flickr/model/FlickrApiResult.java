@@ -13,17 +13,25 @@
  */
 package com.kamosoft.flickr.model;
 
+import com.kamosoft.flickr.Log;
+
 /**
  * Model object for the root element
  * @author tom
  */
 public class FlickrApiResult
 {
+    private String stat;
+
+    private Auth auth;
+
     private Items items;
 
     private Photo photo;
 
-    private String stat;
+    private String code;
+
+    private String message;
 
     public enum Status {
         ok, fail
@@ -34,11 +42,37 @@ public class FlickrApiResult
      */
     public boolean isStatusOk()
     {
+        Log.d( "isStatusOk ? " + stat );
         if ( stat == null )
         {
+
             return false;
         }
-        return stat.equals( Status.ok );
+        return stat.equals( Status.ok.name() );
+    }
+
+    /**
+     * @return the code
+     */
+    public String getCode()
+    {
+        return code;
+    }
+
+    /**
+     * @return the message
+     */
+    public String getMessage()
+    {
+        return message;
+    }
+
+    /**
+     * @return the auth
+     */
+    public Auth getAuth()
+    {
+        return auth;
     }
 
     /**
