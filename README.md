@@ -48,5 +48,5 @@ Available flickr methods
 
 * `flickr.auth.checkToken` with `APICalls.authCheckToken()`
 * `flickr.photos.getInfo` with `APICalls.getPhotoInfo( String photoId )`
-* `flickr.activity.userPhotos` with `APICalls.getActivityUserPhotos( String userId )`
-* `flickr.photos.getInfo` with `APICalls.getPhotoInfo( String photoId )`
+* `flickr.activity.userPhotos` with `APICalls.getActivityUserPhotos( String userId, String timeFrame, String perPage, String page )`
+* `flickr.activity.userComments` with `APICalls.getActivityUserComments( String userId, String perPage, String page )`
