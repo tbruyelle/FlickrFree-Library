@@ -5,24 +5,19 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,10 +30,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.kamosoft.flickr.model.FlickrApiResult;
+
 public class AuthenticateActivity
     extends Activity
     implements OnClickListener
 {
+    private FlickrParameters mFlickrParameters;
 
     SharedPreferences m_auth_prefs;
 
@@ -53,10 +51,6 @@ public class AuthenticateActivity
     static final int DIALOG_ERR_HELP = 13;
 
     static final int DIALOG_NO_NETWORK = 14;
-
-    static final public int AUTH_ERR = 23;
-
-    static final public int AUTH_SUCCESS = 24;
 
     private class WebProgressTask
         extends AsyncTask<WebView, Integer, Object>
@@ -96,31 +90,19 @@ public class AuthenticateActivity
 
     }
 
-    public static void registerAppParameters( Context context, String appName, String apiKey, String apiSecret,
-                                              String authUrl )
-    {
-        SharedPreferences prefs = context.getSharedPreferences( GlobalResources.PREFERENCES_ID, 0 );
-        Editor editor = prefs.edit();
-        editor.putString( GlobalResources.PREF_APP_NAME, appName );
-        editor.putString( GlobalResources.PREF_API_KEY, apiKey );
-        editor.putString( GlobalResources.PREF_API_SECRET, apiSecret );
-        editor.putString( GlobalResources.PREF_AUTH_URL, authUrl );
-        editor.commit();
-    }
-
     @Override
     public void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
         requestWindowFeature( Window.FEATURE_PROGRESS );
 
+        mFlickrParameters = (FlickrParameters) getIntent().getSerializableExtra( "FlickParams" );
+
         m_auth_prefs = getSharedPreferences( GlobalResources.PREFERENCES_ID, 0 );
         m_fail_msg = "";
         setResult( Activity.RESULT_CANCELED );
 
         setContentView( R.layout.authenticate );
-
-        RestClient.setAuth( this );
 
         ( (Button) findViewById( R.id.btnAuthenticate ) ).setEnabled( checkAuthCode() );
         ( (Button) findViewById( R.id.btnAuthenticate ) ).setOnClickListener( this );
@@ -205,15 +187,59 @@ public class AuthenticateActivity
             showDialog( DIALOG_HELP );
         }
 
-        if ( GlobalResources.CheckNetwork( this ) )
+        new CheckNetworkTask().execute();
+    }
+
+    /**
+     * use asyncTask to avoid ANR
+     * @author Tom
+     * created 17 mars 2011
+     */
+    private class CheckNetworkTask
+        extends AsyncTask<Void, Void, Boolean>
+    {
+        private Dialog mDialog;
+
+        /**
+         * @see android.os.AsyncTask#onPreExecute()
+         */
+        @Override
+        protected void onPreExecute()
         {
-            loadAuthPage();
+            // FIXME why getString throw ResourceNotFoundExeption ? very very weird!
+            //            mDialog = ProgressDialog.show( AuthenticateActivity.this, "",
+            //                                           AuthenticateActivity.this.( R.string.checking_network ), true );
+            mDialog = ProgressDialog.show( AuthenticateActivity.this, "", "Checking network, please wait...", true );
         }
-        else
+
+        /**
+         * @see android.os.AsyncTask#doInBackground(Params[])
+         */
+        @Override
+        protected Boolean doInBackground( Void... params )
         {
-            showDialog( DIALOG_NO_NETWORK );
-            setResult( AUTH_ERR );
-            finish();
+            return APICalls.checkNetwork( AuthenticateActivity.this, mFlickrParameters );
+        }
+
+        /**
+         * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
+         */
+        @Override
+        protected void onPostExecute( Boolean result )
+        {
+            mDialog.dismiss();
+            if ( result.booleanValue() )
+            {
+                Log.d( "AuthenticateActivity: network OK" );
+                loadAuthPage();
+            }
+            else
+            {
+                Log.e( "AuthenticateActivity: No network" );
+                AuthenticateActivity.this.showDialog( DIALOG_NO_NETWORK );
+                AuthenticateActivity.this.setResult( FlickrConnect.AUTH_ERR );
+                AuthenticateActivity.this.finish();
+            }
         }
     }
 
@@ -256,8 +282,7 @@ public class AuthenticateActivity
                 return true;
             }
         } );
-        String authUrl = m_auth_prefs.getString( GlobalResources.PREF_AUTH_URL, "" );
-        wv.loadUrl( authUrl );
+        wv.loadUrl( mFlickrParameters.getAuthUrl() );
         new WebProgressTask().execute( ( (WebView) findViewById( R.id.AuthWeb ) ) );
     }
 
@@ -277,53 +302,36 @@ public class AuthenticateActivity
                 + ( (EditText) findViewById( R.id.authnum2 ) ).getText().toString() + "-"
                 + ( (EditText) findViewById( R.id.authnum3 ) ).getText().toString();
 
-            JSONObject json_obj = APICalls.getFullToken( miniToken );
+            FlickrApiResult flickrApiResult;
             try
             {
+                flickrApiResult = APICalls.getFullToken( miniToken, mFlickrParameters );
+
                 // Check that authentication was successful
-                if ( json_obj.getString( "stat" ).equals( "ok" ) )
+                if ( flickrApiResult.isStatusOk() )
                 {
+                    Log.d( "Full token retrieved " + flickrApiResult.getAuth().getToken() );
                     // Retrieve the username and fullname from the object.
-                    String username = JSONParser.getString( json_obj, "auth/user/username" );
-                    String fullname = JSONParser.getString( json_obj, "auth/user/fullname" );
-
-                    // Get the "Auth" Shared preferences object to save authentication information
-                    m_auth_prefs = getSharedPreferences( GlobalResources.PREFERENCES_ID, 0 );
-
-                    // Get the editor for auth_prefs
-                    SharedPreferences.Editor auth_prefs_editor = m_auth_prefs.edit();
+                    String username = flickrApiResult.getAuth().getUser().getUsername();
+                    String fullname = flickrApiResult.getAuth().getUser().getFullname();
 
                     // Save all of the current authentication information. This will be the default account
                     // the next time the app is started.
-                    auth_prefs_editor.putString( GlobalResources.PREF_FULL_TOKEN,
-                                                 JSONParser.getString( json_obj, "auth/token/_content" ) );
-                    auth_prefs_editor.putString( GlobalResources.PREF_PERMS,
-                                                 JSONParser.getString( json_obj, "auth/perms/_content" ) );
-                    auth_prefs_editor.putString( GlobalResources.PREF_USERID,
-                                                 JSONParser.getString( json_obj, "auth/user/nsid" ) );
-                    auth_prefs_editor.putString( GlobalResources.PREF_USERNAME, username );
-                    auth_prefs_editor.putString( GlobalResources.PREF_REALNAME, fullname );
-                    auth_prefs_editor.putString( GlobalResources.PREF_DISPLAYNAME, fullname.equals( "" ) ? username
-                                                                                                        : fullname
-                                                                                                            + " ("
-                                                                                                            + username
-                                                                                                            + ")" );
+                    mFlickrParameters.setFullToken( flickrApiResult.getAuth().getToken().getContent() );
+                    mFlickrParameters.setPerms( flickrApiResult.getAuth().getPerms().getContent() );
+                    mFlickrParameters.setNsid( flickrApiResult.getAuth().getUser().getNsid() );
+                    mFlickrParameters.setUserName( username );
+                    mFlickrParameters.setRealName( fullname );
+                    mFlickrParameters.setDisplayName( fullname.equals( "" ) ? username : fullname + " (" + username
+                        + ")" );
+                    FlickrConnect.registerFlickrParameters( this, mFlickrParameters );
 
-                    // Save the entire JSON Authentication object under the username so it can be retrieved
-                    // when switching accounts.
-                    auth_prefs_editor.putString( "FlickrUsername_" + username, json_obj.toString() );
-
-                    // Attempt to save all changes to Shared Preferences. If successful, set result to RESULT_OK.
-                    if ( auth_prefs_editor.commit() )
-                    {
-                        setResult( Activity.RESULT_OK );
-                    }
-                    setResult( AUTH_SUCCESS );
+                    setResult( FlickrConnect.AUTH_SUCCESS );
                     finish();
                 }
                 else
                 {
-                    m_fail_msg = JSONParser.getString( json_obj, "message" );
+                    m_fail_msg = flickrApiResult.getMessage();
                     if ( m_fail_msg == null )
                     {
                         m_fail_msg = "Unknown Error";
@@ -331,10 +339,12 @@ public class AuthenticateActivity
                     showDialog( DIALOG_ERR );
                 }
             }
-            catch ( JSONException e )
+            catch ( IOException e )
             {
-                e.printStackTrace();
+                m_fail_msg = e.getMessage();
+                showDialog( DIALOG_ERR );
             }
+
         }
         else if ( v.getId() == R.id.btnHelp )
         {
@@ -365,7 +375,7 @@ public class AuthenticateActivity
                         public void onClick( DialogInterface dialog, int id )
                         {
                             m_fail_msg = "";
-                            AuthenticateActivity.this.setResult( AUTH_ERR );
+                            AuthenticateActivity.this.setResult( FlickrConnect.AUTH_ERR );
                             AuthenticateActivity.this.finish();
                         }
                     } );
@@ -373,15 +383,14 @@ public class AuthenticateActivity
                 break;
             case DIALOG_ERR_HELP:
                 builder = new AlertDialog.Builder( this );
-                String appName = m_auth_prefs.getString( GlobalResources.PREF_APP_NAME,
-                                                         GlobalResources.DEFAULT_APP_NAME );
+                String appName = mFlickrParameters.getAppName();
                 builder.setMessage( getString( R.string.msgauthhelp, appName, appName ) ).setTitle( R.string.ttlhelp )
                     .setIcon( android.R.drawable.ic_dialog_info )
                     .setPositiveButton( "OK", new DialogInterface.OnClickListener()
                     {
                         public void onClick( DialogInterface dialog, int id )
                         {
-                            startActivity( new Intent( Intent.ACTION_VIEW, Uri.parse( GlobalResources.m_EDITPERMS_URL ) ) );
+                            startActivity( new Intent( Intent.ACTION_VIEW, Uri.parse( APICalls.m_EDITPERMS_URL ) ) );
                         }
                     } ).setNegativeButton( "Cancel", new DialogInterface.OnClickListener()
                     {
@@ -433,7 +442,7 @@ public class AuthenticateActivity
                 }
                 catch ( IOException e )
                 {
-                    Log.e( "FlickrFree-Library", e.getMessage(), e );
+                    Log.e( e.getMessage(), e );
                 }
                 break;
             case DIALOG_NO_NETWORK:
@@ -451,7 +460,7 @@ public class AuthenticateActivity
                 break;
 
             default:
-                Log.e( "FlickrFree-Library", "Unable to create dialog with id " + id );
+                Log.e( "Unable to create dialog with id " + id );
         }
 
         return err_dialog;
@@ -479,25 +488,4 @@ public class AuthenticateActivity
         return new String( buffer );
     }
 
-    public static boolean IsLoggedIn( Context context )
-    {
-        String token = ( (SharedPreferences) context.getSharedPreferences( GlobalResources.PREFERENCES_ID, 0 ) )
-            .getString( GlobalResources.PREF_FULL_TOKEN, "" );
-
-        return ( !token.equals( "" ) );
-    }
-
-    public static void LogOut( SharedPreferences prefs )
-    {
-        // Get the editor for prefs
-        SharedPreferences.Editor prefs_editor = prefs.edit();
-
-        prefs_editor.remove( GlobalResources.PREF_FULL_TOKEN );
-        prefs_editor.remove( GlobalResources.PREF_PERMS );
-        prefs_editor.remove( GlobalResources.PREF_USERID );
-        prefs_editor.remove( GlobalResources.PREF_USERNAME );
-        prefs_editor.remove( GlobalResources.PREF_REALNAME );
-        prefs_editor.remove( GlobalResources.PREF_DISPLAYNAME );
-        prefs_editor.commit();
-    }
 }
