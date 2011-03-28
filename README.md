@@ -58,7 +58,7 @@ To authenticate you need to :
 Available flickr methods
 ---------------------------
 
-* `flickr.auth.checkToken` with `APICalls.authCheckToken()`
-* `flickr.photos.getInfo` with `APICalls.getPhotoInfo( String photoId )`
-* `flickr.activity.userPhotos` with `APICalls.getActivityUserPhotos( String userId, String timeFrame, String perPage, String page )`
-* `flickr.activity.userComments` with `APICalls.getActivityUserComments( String userId, String perPage, String page )`
+* `flickr.auth.checkToken` with `flickrConnect.isLoggedIn()`
+* `flickr.photos.getInfo` with `flickrConnect.getPhotoInfo( String photoId )`
+* `flickr.activity.userPhotos` with `flickrConnect.getActivityUserPhotos( String userId, String timeFrame, String perPage, String page )`
+* `flickr.activity.userComments` with `flickrConnect.getActivityUserComments( String userId, String perPage, String page )`
