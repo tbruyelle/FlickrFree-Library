@@ -5,21 +5,34 @@ FlickrFree Library is an Android library which aims to provide access to the Fli
 
 It has been forked from [FlickrFree project](http://code.google.com/p/flickrfree)
 
-_Still in alpha phase_
 
 Authentification
 ----------------------
 
 To authenticate you need to : 
 
-1. Push your flickr application keys to the library
+1. Instantiate a `FlickrConnect` class
 
-        AuthenticateActivity.registerAppParameters( this, api_key, api_secret, auth_url );
-        RestClient.setAuth( this ); // this call will become unnecessary in next versions
+        FlickrConnect flickrConnect = new FlickrConnect( this );       
 
-2. Start the activity `AuthenticateActivity`
+2. check if already logged in, if not, call the `authorize` method, and pass your Flickr app parameters. 
 
-         startActivityForResult( new Intent( this, AuthenticateActivity.class ), AUTHENTICATE );
+        /* check the authentification */
+        if ( mFlickrConnect.IsLoggedIn() )
+        {
+            /* auth OK */
+            (...)
+        }
+        else
+        {
+            /* auth need to be done */
+            flickrConnect.authorize( this, getString( R.string.app_name ), 
+                                                      getString( R.string.api_key ),
+                                                      getString( R.string.api_secret ), 
+                                                      getString( R.string.auth_url ), 
+                                                      AUTHENTICATE ); 
+        }
+        
 
 3. Override the `onActivityResult` to retrieve the authentication result.
 
@@ -30,9 +43,8 @@ To authenticate you need to :
         switch ( requestCode )
         {
             case AUTHENTICATE:
-                if ( resultCode == AuthenticateActivity.AUTH_SUCCESS )
+                if ( resultCode == FlickrConnect.AUTH_SUCCESS )
                 {                    
-                    RestClient.setAuth( this ); // this call will become unnecessary in next versions
                     Toast.makeText( this, "Auth OK !", Toast.LENGTH_SHORT ).show();
                 }
                 else
