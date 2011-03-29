@@ -206,7 +206,7 @@ public class FlickrConnect
 
     public boolean IsLoggedIn()
     {
-        if ( getFlickrParameters().getFullToken() == null )
+        if ( getFlickrParameters() == null || getFlickrParameters().getFullToken() == null )
         {
             return false;
         }
