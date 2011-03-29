@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -48,50 +49,12 @@ public class AuthenticateActivity
 
     private static final int DIALOG_NO_NETWORK = 14;
 
-    private class WebProgressTask
-        extends AsyncTask<WebView, Integer, Object>
-    {
-
-        @Override
-        protected Object doInBackground( WebView... params )
-        {
-            if ( params.length > 0 && params[0] != null )
-            {
-                WebView wv = (WebView) params[0];
-                while ( wv.getProgress() < 100 )
-                {
-                    publishProgress( wv.getProgress() );
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPreExecute()
-        {
-            setProgress( Window.PROGRESS_START );
-        }
-
-        @Override
-        protected void onProgressUpdate( Integer... values )
-        {
-            Log.d( "progress update : " + values[0] );
-            setProgress( Window.PROGRESS_END * values[0] / 100 );
-        }
-
-        @Override
-        protected void onPostExecute( Object result )
-        {
-            setProgress( Window.PROGRESS_END );
-        }
-
-    }
-
     @Override
     public void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
-        requestWindowFeature( Window.FEATURE_PROGRESS );
+        requestWindowFeature( Window.FEATURE_INDETERMINATE_PROGRESS );
+        setProgressBarIndeterminateVisibility( true );
 
         mFlickrParameters = (FlickrParameters) getIntent().getSerializableExtra( "FlickParams" );
 
@@ -240,15 +203,25 @@ public class AuthenticateActivity
 
     private void loadAuthPage()
     {
-        WebView wv = ( (WebView) findViewById( R.id.AuthWeb ) );
+        WebView webView = ( (WebView) findViewById( R.id.AuthWeb ) );
         //        CookieSyncManager.createInstance( this );
         //        CookieManager cookies = CookieManager.getInstance();
         //        cookies.removeAllCookie();
-        wv.getSettings().setJavaScriptEnabled( true );
+        webView.getSettings().setJavaScriptEnabled( true );
         //        wv.getSettings().setSavePassword( false );
 
-        wv.setWebViewClient( new WebViewClient()
+        webView.setWebViewClient( new WebViewClient()
         {
+
+            /**
+             * @see android.webkit.WebViewClient#onPageStarted(android.webkit.WebView, java.lang.String, android.graphics.Bitmap)
+             */
+            @Override
+            public void onPageStarted( WebView view, String url, Bitmap favicon )
+            {
+                super.onPageStarted( view, url, favicon );
+                AuthenticateActivity.this.setProgressBarIndeterminateVisibility( true );
+            }
 
             @Override
             public void onPageFinished( WebView view, String url )
@@ -268,17 +241,19 @@ public class AuthenticateActivity
                     view.loadUrl( "javascript:(function() {\n" + "window.scrollTo(window.screen.height, 0);\n"
                         + "})()\n" );
                 }
+                AuthenticateActivity.this.setProgressBarIndeterminateVisibility( false );
             }
 
             @Override
             public boolean shouldOverrideUrlLoading( WebView view, String url )
             {
+                AuthenticateActivity.this.setProgressBarIndeterminateVisibility( true );
                 view.loadUrl( url );
                 return true;
             }
         } );
-        wv.loadUrl( mFlickrParameters.getAuthUrl() );
-        new WebProgressTask().execute( ( (WebView) findViewById( R.id.AuthWeb ) ) );
+
+        webView.loadUrl( mFlickrParameters.getAuthUrl() );
     }
 
     public boolean checkAuthCode()
