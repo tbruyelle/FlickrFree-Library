@@ -38,19 +38,17 @@ public class AuthenticateActivity
 {
     private FlickrParameters mFlickrParameters;
 
-    SharedPreferences m_auth_prefs;
-
-    String m_fail_msg;
+    private String mFailMessage;
 
     static final String TOKEN_INPUT_URL = "http://m.flickr.com/#/services/auth/";
 
-    static final int DIALOG_ERR = 11;
+    private static final int DIALOG_ERR = 11;
 
-    static final int DIALOG_HELP = 12;
+    private static final int DIALOG_HELP = 12;
 
-    static final int DIALOG_ERR_HELP = 13;
+    private static final int DIALOG_ERR_HELP = 13;
 
-    static final int DIALOG_NO_NETWORK = 14;
+    private static final int DIALOG_NO_NETWORK = 14;
 
     private class WebProgressTask
         extends AsyncTask<WebView, Integer, Object>
@@ -98,8 +96,7 @@ public class AuthenticateActivity
 
         mFlickrParameters = (FlickrParameters) getIntent().getSerializableExtra( "FlickParams" );
 
-        m_auth_prefs = getSharedPreferences( GlobalResources.PREFERENCES_ID, 0 );
-        m_fail_msg = "";
+        mFailMessage = "";
         setResult( Activity.RESULT_CANCELED );
 
         setContentView( R.layout.authenticate );
@@ -179,9 +176,10 @@ public class AuthenticateActivity
 
         } );
 
-        if ( !m_auth_prefs.contains( GlobalResources.PREF_HASBEENRUN ) )
+        SharedPreferences authPrefs = getSharedPreferences( GlobalResources.PREFERENCES_ID, 0 );
+        if ( !authPrefs.contains( GlobalResources.PREF_HASBEENRUN ) )
         {
-            SharedPreferences.Editor auth_prefs_editor = m_auth_prefs.edit();
+            SharedPreferences.Editor auth_prefs_editor = authPrefs.edit();
             auth_prefs_editor.putBoolean( GlobalResources.PREF_HASBEENRUN, true );
             auth_prefs_editor.commit();
             showDialog( DIALOG_HELP );
@@ -237,8 +235,6 @@ public class AuthenticateActivity
             {
                 Log.e( "AuthenticateActivity: No network" );
                 AuthenticateActivity.this.showDialog( DIALOG_NO_NETWORK );
-                AuthenticateActivity.this.setResult( FlickrConnect.AUTH_ERR );
-                AuthenticateActivity.this.finish();
             }
         }
     }
@@ -331,17 +327,17 @@ public class AuthenticateActivity
                 }
                 else
                 {
-                    m_fail_msg = flickrApiResult.getMessage();
-                    if ( m_fail_msg == null )
+                    mFailMessage = flickrApiResult.getMessage();
+                    if ( mFailMessage == null )
                     {
-                        m_fail_msg = "Unknown Error";
+                        mFailMessage = "Unknown Error";
                     }
                     showDialog( DIALOG_ERR );
                 }
             }
             catch ( IOException e )
             {
-                m_fail_msg = e.getMessage();
+                mFailMessage = e.getMessage();
                 showDialog( DIALOG_ERR );
             }
 
@@ -361,20 +357,20 @@ public class AuthenticateActivity
         {
             case DIALOG_ERR:
                 builder = new AlertDialog.Builder( this );
-                builder.setMessage( m_fail_msg ).setTitle( R.string.ttlerror )
+                builder.setMessage( mFailMessage ).setTitle( R.string.ttlerror )
                     .setIcon( android.R.drawable.ic_dialog_alert )
                     .setPositiveButton( "Help", new DialogInterface.OnClickListener()
                     {
                         public void onClick( DialogInterface dialog, int id )
                         {
-                            m_fail_msg = "";
+                            mFailMessage = "";
                             showDialog( DIALOG_ERR_HELP );
                         }
                     } ).setNegativeButton( "Close", new DialogInterface.OnClickListener()
                     {
                         public void onClick( DialogInterface dialog, int id )
                         {
-                            m_fail_msg = "";
+                            mFailMessage = "";
                             AuthenticateActivity.this.setResult( FlickrConnect.AUTH_ERR );
                             AuthenticateActivity.this.finish();
                         }
@@ -454,6 +450,8 @@ public class AuthenticateActivity
                         public void onClick( DialogInterface dialog, int id )
                         {
                             dialog.dismiss();
+                            AuthenticateActivity.this.setResult( FlickrConnect.AUTH_ERR );
+                            AuthenticateActivity.this.finish();
                         }
                     } );
                 err_dialog = builder.create();
