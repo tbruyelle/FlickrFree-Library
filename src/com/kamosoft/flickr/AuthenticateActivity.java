@@ -219,6 +219,7 @@ public class AuthenticateActivity
             @Override
             public void onPageStarted( WebView view, String url, Bitmap favicon )
             {
+                Log.d( "onPageStarted url "+url );
                 super.onPageStarted( view, url, favicon );
                 AuthenticateActivity.this.setProgressBarIndeterminateVisibility( true );
             }
@@ -226,20 +227,21 @@ public class AuthenticateActivity
             @Override
             public void onPageFinished( WebView view, String url )
             {
+                Log.d( "onPageFinished url "+url );
                 // Resize text entry boxes to fix the screwed-up password entry
                 // box. This is a bit of a hack, but it seems to work.
                 // TODO: Test code on 2.2 and 1.6; this may not be necessary on
                 // those OS versions.
-                view.loadUrl( "javascript:" + "var inputCollection = document.getElementsByTagName(\"input\");"
-                    + "for (var i=0; i<inputCollection.length; i++) {"
-                    + "    inputCollection[i].style.height = '36px';"
-                    + "    inputCollection[i].style.fontSize = '14px';" + "}" );
+//                view.loadUrl( "javascript:" + "var inputCollection = document.getElementsByTagName(\"input\");"
+//                    + "for (var i=0; i<inputCollection.length; i++) {"
+//                    + "    inputCollection[i].style.height = '36px';"
+//                    + "    inputCollection[i].style.fontSize = '14px';" + "}" );
                 if ( url.equals( TOKEN_INPUT_URL ) )
                 {
                     ( (LinearLayout) findViewById( R.id.TokenInputLayout ) ).setVisibility( View.VISIBLE );
                     ( (EditText) findViewById( R.id.authnum1 ) ).requestFocus();
-                    view.loadUrl( "javascript:(function() {\n" + "window.scrollTo(window.screen.height, 0);\n"
-                        + "})()\n" );
+//                    view.loadUrl( "javascript:(function() {\n" + "window.scrollTo(window.screen.height, 0);\n"
+//                        + "})()\n" );
                 }
                 AuthenticateActivity.this.setProgressBarIndeterminateVisibility( false );
             }
@@ -247,7 +249,7 @@ public class AuthenticateActivity
             @Override
             public boolean shouldOverrideUrlLoading( WebView view, String url )
             {
-                AuthenticateActivity.this.setProgressBarIndeterminateVisibility( true );
+                Log.d( "should override url "+url );
                 view.loadUrl( url );
                 return true;
             }
