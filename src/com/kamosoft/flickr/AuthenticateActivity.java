@@ -22,8 +22,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -77,6 +75,7 @@ public class AuthenticateActivity
         @Override
         protected void onProgressUpdate( Integer... values )
         {
+            Log.d( "progress update : " + values[0] );
             setProgress( Window.PROGRESS_END * values[0] / 100 );
         }
 
@@ -242,11 +241,11 @@ public class AuthenticateActivity
     private void loadAuthPage()
     {
         WebView wv = ( (WebView) findViewById( R.id.AuthWeb ) );
-        CookieSyncManager.createInstance( this );
-        CookieManager cookies = CookieManager.getInstance();
-        cookies.removeAllCookie();
+        //        CookieSyncManager.createInstance( this );
+        //        CookieManager cookies = CookieManager.getInstance();
+        //        cookies.removeAllCookie();
         wv.getSettings().setJavaScriptEnabled( true );
-        wv.getSettings().setSavePassword( false );
+        //        wv.getSettings().setSavePassword( false );
 
         wv.setWebViewClient( new WebViewClient()
         {
