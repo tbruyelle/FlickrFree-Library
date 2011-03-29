@@ -6,7 +6,18 @@ FlickrFree Library is an Android library which aims to provide access to the Fli
 It has been forked from [FlickrFree project](http://code.google.com/p/flickrfree)
 
 
-Authentification
+Installation using Eclipse
+----------------------
+
+1. Clone the library sources
+
+        git clone  git@github.com:tbruyelle/FlickrFree-Library.git
+
+2. Import the sources in Eclipse *File -> New -> Android Project*
+
+3. Add the library in your project *properties -> Android -> Library -> Add -> FlickrFree-Library*
+
+Authentication
 ----------------------
 
 To authenticate you need to : 
