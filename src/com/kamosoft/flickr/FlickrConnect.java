@@ -278,7 +278,7 @@ public class FlickrConnect
 
     public void logOut()
     {
-        logOut( false );
+        logOut( true );
     }
 
     /**
