@@ -16,10 +16,15 @@ package com.kamosoft.flickr;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.AsyncTask;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 
 import com.kamosoft.flickr.model.FlickrApiResult;
 
@@ -204,7 +209,11 @@ public class FlickrConnect
         return callApi( "flickr.photos.getInfo", new String[] { "photo_id" }, new String[] { photoId }, true );
     }
 
-    public boolean IsLoggedIn()
+    /**
+     * synchronous method for check if logged in
+     * @return
+     */
+    public boolean isLoggedIn()
     {
         if ( getFlickrParameters() == null || getFlickrParameters().getFullToken() == null )
         {
@@ -214,8 +223,75 @@ public class FlickrConnect
         return result != null && result.isStatusOk();
     }
 
+    /**
+     * Asynchronous method for check if logged in
+     * @param loginHandler
+     * @return
+     */
+    public void isLoggedIn( final LoginHandler loginHandler )
+    {
+        new AsyncTask<Void, Void, Boolean>()
+        {
+            private Dialog mDialog;
+
+            /**
+             * @see android.os.AsyncTask#onPreExecute()
+             */
+            @Override
+            protected void onPreExecute()
+            {
+                mDialog = ProgressDialog.show( mContext, "", "Checking if logged in...", true );
+            }
+
+            @Override
+            protected Boolean doInBackground( Void... params )
+            {
+                return FlickrConnect.this.isLoggedIn();
+            }
+
+            /**
+             * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
+             */
+            @Override
+            protected void onPostExecute( Boolean result )
+            {
+                mDialog.dismiss();
+                if ( result.booleanValue() )
+                {
+                    loginHandler.onLoginSuccess();
+                }
+                else
+                {
+                    loginHandler.onLoginFailed();
+                }
+            }
+        }.execute();
+
+    }
+
+    public interface LoginHandler
+    {
+        void onLoginSuccess();
+
+        void onLoginFailed();
+    }
+
     public void logOut()
     {
+        logOut( false );
+    }
+
+    /**
+     * @param fromYahoo if true also remove the cookies to force a yahoo login again
+     */
+    public void logOut( boolean fromYahoo )
+    {
+        if ( fromYahoo )
+        {
+            CookieSyncManager.createInstance( mContext );
+            CookieManager cookies = CookieManager.getInstance();
+            cookies.removeAllCookie();
+        }
         clearFlickrParameters( mContext );
     }
 }
