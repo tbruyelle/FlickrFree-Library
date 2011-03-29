@@ -65,6 +65,8 @@ To authenticate you need to :
                 break;
          }
          }
+         
+You can also look at the [FlickrWidget project](https://github.com/tbruyelle/FlickrWidget), to see how to use this library.         
 
 Available flickr methods
 ---------------------------
