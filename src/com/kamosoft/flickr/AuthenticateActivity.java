@@ -240,8 +240,9 @@ public class AuthenticateActivity
                 {
                     ( (LinearLayout) findViewById( R.id.TokenInputLayout ) ).setVisibility( View.VISIBLE );
                     ( (EditText) findViewById( R.id.authnum1 ) ).requestFocus();
-//                    view.loadUrl( "javascript:(function() {\n" + "window.scrollTo(window.screen.height, 0);\n"
-//                        + "})()\n" );
+                    // force scroll on top
+                    view.loadUrl( "javascript:(function() {\n" + "window.scrollTo(window.screen.height, 0);\n"
+                        + "})()\n" );
                 }
                 AuthenticateActivity.this.setProgressBarIndeterminateVisibility( false );
             }
