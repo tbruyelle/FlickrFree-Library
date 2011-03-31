@@ -156,6 +156,7 @@ public class FlickrConnect
      * @return
      */
     private FlickrApiResult callApi( String methodName, String[] paramNames, String[] paramValues, boolean authenticated )
+        throws IOException
     {
         try
         {
@@ -165,9 +166,8 @@ public class FlickrConnect
         {
             Log.e( "IOException during call " + methodName );
             Log.e( e.getMessage(), e );
-
+            throw e;
         }
-        return null;
     }
 
     /**
@@ -179,6 +179,7 @@ public class FlickrConnect
      * @return FlickrApiResult
      */
     public FlickrApiResult getActivityUserPhotos( String userId, String timeFrame, String perPage, String page )
+        throws IOException
     {
         return callApi( "flickr.activity.userPhotos", new String[] { "user_id", "timeframe", "per_page", "page" },
                         new String[] { userId, timeFrame, perPage, page }, true );
@@ -192,6 +193,7 @@ public class FlickrConnect
      * @return FlickrApiResult
      */
     public FlickrApiResult getActivityUserComments( String userId, String perPage, String page )
+        throws IOException
     {
         return callApi( "flickr.activity.userComments", new String[] { "user_id", "per_page", "page" }, new String[] {
             userId,
@@ -205,6 +207,7 @@ public class FlickrConnect
      * @return FlickrApiResult
      */
     public FlickrApiResult getPhotoInfo( String photoId )
+        throws IOException
     {
         return callApi( "flickr.photos.getInfo", new String[] { "photo_id" }, new String[] { photoId }, true );
     }
@@ -214,8 +217,13 @@ public class FlickrConnect
      * @return
      */
     public boolean isLoggedIn()
+        throws IOException
     {
         if ( getFlickrParameters() == null || getFlickrParameters().getFullToken() == null )
+        {
+            return false;
+        }
+        if ( !APICalls.ping( getFlickrParameters() ) )
         {
             return false;
         }
@@ -230,9 +238,15 @@ public class FlickrConnect
      */
     public void isLoggedIn( final LoginHandler loginHandler )
     {
-        new AsyncTask<Void, Void, Boolean>()
+        new AsyncTask<Void, Void, Integer>()
         {
             private Dialog mDialog;
+
+            private Integer LOGIN_SUCCESS = Integer.valueOf( 0 );
+
+            private Integer LOGIN_FAILED = Integer.valueOf( 1 );
+
+            private Integer LOGIN_ERROR = Integer.valueOf( 2 );
 
             /**
              * @see android.os.AsyncTask#onPreExecute()
@@ -244,25 +258,37 @@ public class FlickrConnect
             }
 
             @Override
-            protected Boolean doInBackground( Void... params )
+            protected Integer doInBackground( Void... params )
             {
-                return FlickrConnect.this.isLoggedIn();
+                try
+                {
+                    return FlickrConnect.this.isLoggedIn() ? LOGIN_SUCCESS : LOGIN_FAILED;
+                }
+                catch ( IOException e )
+                {
+                    return LOGIN_ERROR;
+                }
             }
 
             /**
              * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
              */
             @Override
-            protected void onPostExecute( Boolean result )
+            protected void onPostExecute( Integer result )
             {
                 mDialog.dismiss();
-                if ( result.booleanValue() )
+
+                if ( result.equals( LOGIN_SUCCESS ) )
                 {
                     loginHandler.onLoginSuccess();
                 }
-                else
+                else if ( result.equals( LOGIN_FAILED ) )
                 {
                     loginHandler.onLoginFailed();
+                }
+                else
+                {
+                    loginHandler.onLoginError();
                 }
             }
         }.execute();
@@ -274,6 +300,8 @@ public class FlickrConnect
         void onLoginSuccess();
 
         void onLoginFailed();
+
+        void onLoginError();
     }
 
     public void logOut()

@@ -242,18 +242,7 @@ public class APICalls
 
         if ( ( wifi_state == NetworkInfo.State.CONNECTED ) || ( mobile_state == NetworkInfo.State.CONNECTED ) )
         {
-            FlickrApiResult flickrApiResult;
-            try
-            {
-                flickrApiResult = ping( flickrParameters );
-
-            }
-            catch ( IOException e )
-            {
-                return false;
-            }
-            return ( flickrApiResult != null && flickrApiResult.isStatusOk() );
-
+            return ping( flickrParameters );
         }
         else
         {
@@ -261,10 +250,17 @@ public class APICalls
         }
     }
 
-    public static FlickrApiResult ping( FlickrParameters flickrParameters )
-        throws IOException
+    public static boolean ping( FlickrParameters flickrParameters )
     {
-        return perform( "flickr.test.echo", null, null, flickrParameters, false );
+        try
+        {
+            FlickrApiResult flickrApiResult = perform( "flickr.test.echo", null, null, flickrParameters, false );
+            return ( flickrApiResult != null && flickrApiResult.isStatusOk() );
+        }
+        catch ( IOException e )
+        {
+            return false;
+        }
     }
 
     /*
