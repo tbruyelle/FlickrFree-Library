@@ -24,6 +24,8 @@ import org.json.JSONException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.kamosoft.flickr.Log;
+
 /**
  * Model object for Photo element
  * @author tom
@@ -141,6 +143,11 @@ public class Photo
      */
     public String getOriginalformat()
     {
+        if (originalformat==null)
+        {
+            /* sometimes the image format isn't supplied, we force jpg */
+            return "jpg";
+        }
         return originalformat;
     }
 
@@ -240,7 +247,7 @@ public class Photo
         return getImageURL( getFarm(), getServer(), getId(), getSecret(), size, getOriginalformat() );
     }
 
-    private String getImageURL( String farm, String server, String id, String secret, Size size, String extension )
+    public static String getImageURL( String farm, String server, String id, String secret, Size size, String extension )
     {
         String img_url = "http://farm" + farm + ".static.flickr.com/" + server + "/" + id + "_" + secret;
         if ( size == Size.SMALLSQUARE )
@@ -264,7 +271,7 @@ public class Photo
             img_url = img_url + "_o";
         }
         img_url = img_url + "." + extension;
-
+        Log.d( "url img=" + img_url );
         return img_url;
     }
 
