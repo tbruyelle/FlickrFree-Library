@@ -12,6 +12,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -199,6 +200,17 @@ public class AuthenticateActivity
                 AuthenticateActivity.this.showDialog( DIALOG_NO_NETWORK );
             }
         }
+    }
+    
+    
+
+    /**
+     * @see android.app.Activity#onConfigurationChanged(android.content.res.Configuration)
+     */
+    @Override
+    public void onConfigurationChanged( Configuration newConfig )
+    {
+        super.onConfigurationChanged( newConfig );
     }
 
     private void loadAuthPage()
